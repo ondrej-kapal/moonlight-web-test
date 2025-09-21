@@ -1,16 +1,16 @@
 backend:
-  # zatím placeholder; backend (GitHub / Git Gateway) doladíme později
+  # Zatím placeholder – autentizaci nastavíme později (GitHub backend).
   name: git-gateway
   branch: main
 
-# Důležité: zapne relativní cesty k médiím (vůči umístění entry souboru)
+# Media knihovna – explicitně uvedeme "file", ať projde schématem.
+# media_library:
+#   name: file
+
+# Umožní ukládat obrázky vedle index.md (relativně k entry souboru).
 media_folder_relative: true
 
-# Decap pro lokální produkci
-local_backend: true 
-
-# Globální media_folder/public_folder tu ponecháme jako fallback,
-# ale pro kolekce je přepíšeme na "" = "stejná složka jako entry".
+# Fallback (když někde nezadáme per-collection override).
 media_folder: "public/content/uploads"
 public_folder: "/content/uploads"
 
@@ -19,11 +19,9 @@ collections:
     name: "articles"
     folder: "public/content/articles"
     create: true
-    # Vytvářej složku podle slugu a do ní index.md
-    path: "{{slug}}/index"
+    path: "{{slug}}/index"      # -> content/articles/<slug>/index.md
     extension: "md"
-    # Média ukládej vedle index.md
-    media_folder: ""
+    media_folder: ""            # -> média vedle index.md
     public_folder: ""
     fields:
       - { label: "Titulek", name: "title", widget: "string" }
