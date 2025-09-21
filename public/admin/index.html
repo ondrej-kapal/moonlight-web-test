@@ -2,19 +2,103 @@
 <html lang="cs">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
-    <title>Moonlight Tattoo Wizard</title>
+    <title>Content Manager</title>
+
+    <!-- Řekneme Decapu, že si config předáme ručně -->
     <script>
-    window.CMS_MANUAL_INIT = true; // Nutné pro správné načtení v podadresáři
-    </script> 
+      window.CMS_MANUAL_INIT = true;
+    </script>
   </head>
   <body>
-    <!-- Decap CMS UI -->
+    <!-- Decap CMS UI z CDN -->
     <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+    <!-- Vložený (inline) config – nenačítá se žádný config.yml -->
     <script>
-    // cache-buster, aby Decap vždy vzal aktuální config
-    CMS.init({ config: "/admin/config.yml?v=" + Date.now() });
+      CMS.init({
+        config: {
+          // produkční přihlášení doladíme později (GitHub backend), teď placeholder
+          backend: { name: "git-gateway", branch: "main" },
+
+          // lokální režim (když spustíš `npx decap-server` + ?local_backend=true)
+          local_backend: true,
+
+          // chceme, aby obrázky byly vedle index.md
+          media_folder_relative: true,
+
+          // fallback (kolekce si to níže přepíšou na ""), ale schema to vyžaduje
+          media_folder: "public/content/uploads",
+          public_folder: "/content/uploads",
+
+          collections: [
+            {
+              label: "Články",
+              name: "articles",
+              folder: "public/content/articles",
+              create: true,
+              path: "{{slug}}/index",
+              extension: "md",
+              media_folder: "",
+              public_folder: "",
+              fields: [
+                { label: "Titulek", name: "title", widget: "string" },
+                { label: "Datum", name: "date", widget: "datetime" },
+                { label: "Perex", name: "excerpt", widget: "text", required: false },
+                { label: "Obrázek", name: "cover", widget: "image", required: false },
+                { label: "Obsah", name: "body", widget: "markdown" },
+                { label: "Tagy", name: "tags", widget: "list", required: false }
+              ]
+            },
+            {
+              label: "Portfolio",
+              name: "portfolio",
+              folder: "public/content/portfolio",
+              create: true,
+              path: "{{slug}}/index",
+              extension: "md",
+              media_folder: "",
+              public_folder: "",
+              fields: [
+                { label: "Název", name: "title", widget: "string" },
+                { label: "Datum", name: "date", widget: "datetime" },
+                { label: "Popis", name: "description", widget: "markdown", required: false },
+                {
+                  label: "Galerie",
+                  name: "images",
+                  widget: "list",
+                  summary: "{{fields.image}}",
+                  field: { label: "Obrázek", name: "image", widget: "image" }
+                },
+                { label: "Tagy", name: "tags", widget: "list", required: false }
+              ]
+            },
+            {
+              label: "Volné návrhy",
+              name: "designs",
+              folder: "public/content/designs",
+              create: true,
+              path: "{{slug}}/index",
+              extension: "md",
+              media_folder: "",
+              public_folder: "",
+              fields: [
+                { label: "Název", name: "title", widget: "string" },
+                { label: "Cena", name: "price", widget: "number", required: false },
+                { label: "Dostupné", name: "available", widget: "boolean", default: true },
+                {
+                  label: "Obrázky",
+                  name: "images",
+                  widget: "list",
+                  field: { label: "Obrázek", name: "image", widget: "image" }
+                },
+                { label: "Popis", name: "description", widget: "markdown", required: false }
+              ]
+            }
+          ]
+        }
+      });
     </script>
   </body>
 </html>
