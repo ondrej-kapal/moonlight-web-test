@@ -1,4 +1,71 @@
-backend: { name: git-gateway, branch: main }
+backend:
+  # zatím placeholder; backend (GitHub / Git Gateway) doladíme později
+  name: git-gateway
+  branch: main
+
+# Důležité: zapne relativní cesty k médiím (vůči umístění entry souboru)
+media_folder_relative: true
+
+# Decap pro lokální produkci
+local_backend: true 
+
+# Globální media_folder/public_folder tu ponecháme jako fallback,
+# ale pro kolekce je přepíšeme na "" = "stejná složka jako entry".
 media_folder: "public/content/uploads"
 public_folder: "/content/uploads"
-collections: [] # doplníme (articles, portfolio, designs)
+
+collections:
+  - label: "Články"
+    name: "articles"
+    folder: "public/content/articles"
+    create: true
+    # Vytvářej složku podle slugu a do ní index.md
+    path: "{{slug}}/index"
+    extension: "md"
+    # Média ukládej vedle index.md
+    media_folder: ""
+    public_folder: ""
+    fields:
+      - { label: "Titulek", name: "title", widget: "string" }
+      - { label: "Datum", name: "date", widget: "datetime" }
+      - { label: "Perex", name: "excerpt", widget: "text", required: false }
+      - { label: "Obrázek", name: "cover", widget: "image", required: false }
+      - { label: "Obsah", name: "body", widget: "markdown" }
+      - { label: "Tagy", name: "tags", widget: "list", required: false }
+
+  - label: "Portfolio"
+    name: "portfolio"
+    folder: "public/content/portfolio"
+    create: true
+    path: "{{slug}}/index"
+    extension: "md"
+    media_folder: ""
+    public_folder: ""
+    fields:
+      - { label: "Název", name: "title", widget: "string" }
+      - { label: "Datum", name: "date", widget: "datetime" }
+      - { label: "Popis", name: "description", widget: "markdown", required: false }
+      - label: "Galerie"
+        name: "images"
+        widget: "list"
+        summary: "{{fields.image}}"
+        field: { label: "Obrázek", name: "image", widget: "image" }
+      - { label: "Tagy", name: "tags", widget: "list", required: false }
+
+  - label: "Volné návrhy"
+    name: "designs"
+    folder: "public/content/designs"
+    create: true
+    path: "{{slug}}/index"
+    extension: "md"
+    media_folder: ""
+    public_folder: ""
+    fields:
+      - { label: "Název", name: "title", widget: "string" }
+      - { label: "Cena", name: "price", widget: "number", required: false }
+      - { label: "Dostupné", name: "available", widget: "boolean", default: true }
+      - label: "Obrázky"
+        name: "images"
+        widget: "list"
+        field: { label: "Obrázek", name: "image", widget: "image" }
+      - { label: "Popis", name: "description", widget: "markdown", required: false }
