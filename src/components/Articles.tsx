@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 type RenderArticle = {
   id: string;
@@ -108,9 +109,11 @@ export default function Articles() {
                 ) : null}
 
                 {/* necháme tu jen nenápadné CTA pro budoucí detail; můžeš klidně odstranit */}
-                <Button variant="minimal" className="mt-4 p-0 h-auto font-medium">
-                  Číst více →
-                </Button>
+                {article.slug ? (
+                  <Button asChild variant="minimal" className="mt-4 p-0 h-auto font-medium">
+                    <Link to={`/articles/${article.slug}`}>Číst více →</Link>
+                  </Button>
+                ) : null}
               </div>
             </Card>
           ))}

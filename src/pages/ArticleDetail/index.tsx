@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import Navbar from "@/components/Navbar";
@@ -22,7 +23,7 @@ function formatDateCz(iso?: string | null) {
 
 export default function ArticleDetail() {
   const { slug: slugParam, id: idParam } = useParams<{ slug?: string; id?: string }>();
-  const slug = slugParam ?? idParam ?? ""; // podporujeme starší :id i novější :slug
+  const slug = slugParam ?? idParam ?? "";
 
   const [meta, setMeta] = useState<ArticleMeta | null>(null);
   const [md, setMd] = useState<string | null>(null);
@@ -72,35 +73,41 @@ export default function ArticleDetail() {
     };
   }, [slug]);
 
-  // chybový stav
+  // ERROR stav – žádný link nahoře, jen tlačítko dole
   if (err) {
     return (
       <>
         <Navbar />
         <div className="max-w-3xl mx-auto px-4 py-16">
-          <p className="text-sm text-muted-foreground mb-4">
-            <Link to="/" className="hover:underline">← Zpět na úvod</Link>
-          </p>
           <h1 className="text-2xl font-semibold mb-2">Článek nenalezen</h1>
           <p className="text-muted-foreground">{err}</p>
+
+          <div className="mt-10 flex justify-center">
+            <Button asChild variant="hero">
+              <Link to="/#articles">← Zpět na úvod</Link>
+            </Button>
+          </div>
         </div>
       </>
     );
   }
 
-  // loading
+  // LOADING stav – žádný link nahoře, tlačítko dole
   if (!md) {
     return (
       <>
         <Navbar />
         <div className="max-w-3xl mx-auto px-4 py-16">
-          <p className="text-sm text-muted-foreground mb-4">
-            <Link to="/" className="hover:underline">← Zpět na úvod</Link>
-          </p>
           <div className="animate-pulse space-y-4">
             <div className="h-8 w-64 bg-muted rounded" />
             <div className="h-4 w-40 bg-muted/70 rounded" />
             <div className="h-64 w-full bg-muted rounded" />
+          </div>
+
+          <div className="mt-10 flex justify-center">
+            <Button asChild variant="hero">
+              <Link to="/#articles">← Zpět na úvod</Link>
+            </Button>
           </div>
         </div>
       </>
@@ -111,10 +118,7 @@ export default function ArticleDetail() {
     <>
       <Navbar />
       <article className="max-w-3xl mx-auto px-4 py-10">
-        <p className="text-sm text-muted-foreground mb-4">
-          <Link to="/" className="hover:underline">← Zpět na úvod</Link>
-        </p>
-
+        {/* Hlavní titulek + meta */}
         <h1 className="text-3xl md:text-4xl font-bold mb-2 gradient-text-gold">
           {meta?.title ?? slug}
         </h1>
@@ -123,6 +127,7 @@ export default function ArticleDetail() {
           {meta?.readTime ? ` • ${meta.readTime}` : ""}
         </div>
 
+        {/* Cover (pokud je) */}
         {meta?.cover ? (
           <img
             src={meta.cover}
@@ -132,6 +137,7 @@ export default function ArticleDetail() {
           />
         ) : null}
 
+        {/* Markdown obsah */}
         <div className="prose max-w-none">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -155,7 +161,16 @@ export default function ArticleDetail() {
             {md}
           </ReactMarkdown>
         </div>
+
+        {/* Spodní CTA „Zpět na úvod“ */}
+        <hr className="my-8 border-muted" />
+        <div className="mt-6 flex justify-center">
+          <Button asChild variant="hero">
+            <Link to="/#articles">← Zpět na úvod</Link>
+          </Button>
+        </div>
       </article>
     </>
   );
 }
+
