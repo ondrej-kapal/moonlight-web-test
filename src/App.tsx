@@ -7,6 +7,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 import HomePage from "./pages/HomePage";
+import ArticleDetail from "./pages/ArticleDetail"; // Import of article detail page
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,7 +29,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            {/* catch-all ponecháme beze změny */}
+            <Route path="/articles/:slug" element={<ArticleDetail />} />   {/* ⬅ detail */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
