@@ -44,8 +44,8 @@ const watcher = chokidar.watch(ARTICLES_DIR, {
 watcher.on("all", (event, filePath) => {
   const rel = path.relative(ARTICLES_DIR, filePath);
 
-  // Reaguj jen na index.md, obrázky, přidání/odebrání složek
-  const isMd = /(^|[/\\])index\.md$/i.test(rel);
+  // 👉 Reaguj na jakýkoliv .md (ne jen index.md), obrázky a změny složek
+  const isMd = /\.md$/i.test(rel);
   const isImg = /\.(png|jpe?g|webp|gif|svg|avif)$/i.test(rel);
   const isDirChange = event === "addDir" || event === "unlinkDir";
 
