@@ -13,6 +13,10 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -56,6 +60,20 @@ export default {
           "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
+        },
+        // Tattoo studio custom colors
+        'tattoo-red': {
+          DEFAULT: "hsl(var(--tattoo-red))",
+          dark: "hsl(var(--tattoo-red-dark))",
+        },
+        'tattoo-gold': {
+          DEFAULT: "hsl(var(--tattoo-gold))",
+          dark: "hsl(var(--tattoo-gold-dark))",
+        },
+        'tattoo-black': "hsl(var(--tattoo-black))",
+        'tattoo-grey': {
+          DEFAULT: "hsl(var(--tattoo-grey))",
+          light: "hsl(var(--tattoo-grey-light))",
         },
       },
       borderRadius: {
