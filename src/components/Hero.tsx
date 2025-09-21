@@ -25,9 +25,9 @@ const Hero = () => {
       <div className="relative z-10 text-center section-padding">
         <div className="max-w-4xl mx-auto">
           <h1 className="hero-title gradient-text mb-6">
-            UMĚNÍ
+            Moonlight
             <br />
-            <span className="gradient-text-gold">TETOVÁNÍ</span>
+            <span className="gradient-text-gold">Tattoo</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-foreground/90 mb-8 font-light max-w-2xl mx-auto leading-relaxed">
