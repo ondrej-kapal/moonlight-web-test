@@ -1,90 +1,94 @@
-import { useNavigate, useLocation } from "react-router-dom";
-import { useCallback } from "react";
+import { useState, useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 
-const SECTIONS = [
-  { id: "about", label: "O mně" },
-  { id: "styles", label: "Styly & proces" },
-  { id: "portfolio", label: "Portfolio" },
-  { id: "articlescare", label: "Články & péče" },
-  { id: "studio", label: "Studio" },
-  { id: "designs", label: "Volné návrhy" },
-  { id: "contact", label: "Kontakt & rezervace" },
-];
+const Navigation = () => {
+  const [activeSection, setActiveSection] = useState('home');
+  const [isScrolled, setIsScrolled] = useState(false);
 
-export default function Navbar() {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const menuItems = [
+    { id: 'about', label: 'O mně' },
+    { id: 'styles', label: 'Styly & proces' },
+    { id: 'portfolio', label: 'Portfolio' },
+    { id: 'articles', label: 'Články & péče' },
+    { id: 'studio', label: 'Studio' },
+    { id: 'designs', label: 'Volné návrhy' },
+    { id: 'contact', label: 'Kontakt & rezervace' },
+  ];
 
-  const scrollTo = useCallback(
-    (id: string) => {
-      const doScroll = () => {
-        const el = document.getElementById(id);
-        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-      };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+      
+      // Update active section based on scroll position
+      const sections = menuItems.map(item => document.getElementById(item.id));
+      const scrollPosition = window.scrollY + 100;
 
-      if (location.pathname !== "/") {
-        // jsme mimo home → vrať se na home a potom plynule scrollni
-        navigate("/", { replace: false });
-        // malý delay, aby se DOM s home sekcemi vykreslil
-        setTimeout(doScroll, 50);
-      } else {
-        doScroll();
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const section = sections[i];
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(menuItems[i].id);
+          break;
+        }
       }
-    },
-    [location.pathname, navigate]
-  );
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b">
-      <nav className="max-w-6xl mx-auto px-4 py-3 flex items-center gap-4 overflow-x-auto">
-        <a
-          href="/"
-          className="font-semibold whitespace-nowrap mr-2"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("/");
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-        >
-          Moonlight
-        </a>
-        <ul className="flex items-center gap-3 text-sm">
-          {SECTIONS.map((s) => (
-            <li key={s.id}>
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      isScrolled ? 'bg-tattoo-black/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+    }`}>
+      <div className="section-padding py-4">
+        <div className="flex items-center justify-between">
+          <div 
+            className="text-2xl font-bold cursor-pointer gradient-text-gold"
+            onClick={() => scrollToSection('home')}
+          >
+            TATTOO STUDIO
+          </div>
+          
+          <div className="hidden lg:flex items-center space-x-8">
+            {menuItems.map((item) => (
               <button
-                className="px-3 py-1 rounded hover:bg-gray-100"
-                onClick={() => scrollTo(s.id)}
+                key={item.id}
+                onClick={() => scrollToSection(item.id)}
+                className={`text-sm font-medium transition-colors duration-300 hover:text-tattoo-red ${
+                  activeSection === item.id ? 'text-tattoo-red' : 'text-foreground/80'
+                }`}
               >
-                {s.label}
+                {item.label}
               </button>
-            </li>
-          ))}
-          <li className="ml-2">
-            <a
-              href="/articles"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate("/articles");
-              }}
-              className="px-3 py-1 rounded hover:bg-gray-100"
-            >
-              Články
-            </a>
-          </li>
-          <li>
-            <a
-              href="/admin"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate("/admin");
-              }}
-              className="px-3 py-1 rounded hover:bg-gray-100"
-            >
-              Admin
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </header>
+            ))}
+          </div>
+
+          <Button 
+            variant="hero" 
+            size="sm"
+            onClick={() => scrollToSection('contact')}
+            className="hidden md:flex"
+          >
+            Rezervovat
+          </Button>
+
+          {/* Mobile menu button */}
+          <Button variant="ghost" size="icon" className="lg:hidden">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </Button>
+        </div>
+      </div>
+    </nav>
   );
-}
+};
+
+export default Navigation;
