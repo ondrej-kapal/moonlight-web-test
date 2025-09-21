@@ -12,41 +12,49 @@ const About = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h3 className="text-3xl font-bold gradient-text-gold mb-6">
-              Vášeň pro umění tetování
+              Vlastní svět umění
             </h3>
             
             <div className="space-y-4 text-lg leading-relaxed text-foreground/90">
               <p>
-                Jmenuji se [Jméno] a tetování je moje vášeň již více než 8 let. 
-                Specializuji se na realistické portréty, geometrické vzory a černobílé composice, 
-                které vyprávějí jedinečné příběhy každého klienta.
+                Jmenuji se Dana a tetování je součástí mého života už od střední školy. 
+                Ve svých 17 letech jsem si za našetřené peníze pořídila první tetovací strojek a od té doby jsem věděla, že tohle je moje cesta.
               </p>
-              
               <p>
-                Moje cesta začala na umělecké škole, kde jsem si osvojil základy kresby a malby. 
-                Postupně jsem se věnoval tetování a neustále zdokonaluju své dovednosti 
-                účastí na workshopech a konvencích po celé Evropě.
+                Kreslení mě provází od dětství - už od 12 let jsem každou volnou chvíli trávila u papíru a prostřednictvím umění si vytvářela svůj vlastní svět. 
+                V tom reálném jsem se totiž často cítila trochu stranou. 
+                Tetování mě fascinovalo odjakživa, a když se k tomu přidaly mé kreslířské dovednosti, všechno do sebe zapadlo.
               </p>
-              
               <p>
-                Každé tetování je pro mě výzvou a příležitostí vytvořit něco naprosto jedinečného. 
-                Věřím, že dobrá komunikace s klientem je základem pro vytvoření dokonalého tetování, 
-                které bude nosit celý život s hrdostí.
+                V létě 2023 jsem úspěšně získala certifikace a od února 2024 se tetování stalo nejen mou vášní, ale i profesí. 
+                Nejraději pracuji s černobílými motivy – zvířata, portréty osob, postavy z her či pohádek – a ráda do nich přidávám i barevné akcenty nebo prvky abstrakce.
+              </p>
+              <p>
+                Každý návrh tvořím na míru, ať už jde o nápis, portrét, nebo originální abstraktní vzor. 
+                Neustále se učím a zdokonaluji, protože věřím, že tetování je nekonečná cesta růstu, inspirace a tvrdé práce.
+                Pro mě je každé tetování víc než jen obrázek na kůži – je to spojení s klientem, důvěra a společný proces tvorby, jehož výsledkem je originální dílo, které nosíš s hrdostí celý život.
+              </p>
+              <p>
+                Každý kousek chci udělat speciální. 
+                Všechny návrhy kreslím ručně – nepoužívám AI ani nekopíruji cizí práce.
+              </p>
+              <p>
+                Cítíš, že by to mohl být match? Pak neváhej, rezervuj si termín nebo mi jednoduše napiš. 🙂
               </p>
             </div>
 
             <div className="grid grid-cols-2 gap-4 mt-8">
               <Card className="p-4 card-hover">
                 <div className="text-center">
-                  <div className="text-2xl font-bold gradient-text mb-2">500+</div>
-                  <div className="text-sm text-muted-foreground">Dokončených tetování</div>
+                  <div className="text-2xl font-bold gradient-text mb-2">TEXT</div>
+                  <div className="text-sm text-muted-foreground">PLACEHOLDER</div>
                 </div>
               </Card>
               
               <Card className="p-4 card-hover">
                 <div className="text-center">
-                  <div className="text-2xl font-bold gradient-text-gold mb-2">8+</div>
-                  <div className="text-sm text-muted-foreground">Let zkušeností</div>
+                  <div className="text-2xl font-bold gradient-text-gold mb-2">TEXT 2</div>
+                  <div className="text-sm text-muted-foreground">PLACEHOLDER</div>
                 </div>
               </Card>
             </div>
