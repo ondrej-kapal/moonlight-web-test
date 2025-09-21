@@ -1,11 +1,9 @@
 ---
 title: TEST
-date: 1993-10-13T14:10:00.000+01:00
-excerpt: TEST TEXTŮ
+date: 2025-09-21T16:11:00.000+02:00
 cover: self-made-misery-art.png
 ---
-TEX TTETST \
-SETASEA\
-S\
-AFSA\
-F
+TEST\
+TEST\
+TEST\
+TEEEST

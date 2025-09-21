@@ -7,6 +7,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 
 import HomePage from "./pages/HomePage";
+import ArticlesPage from "./pages/ArticlesPage";
 import ArticleDetail from "./pages/ArticleDetail"; // Import of article detail page
 import NotFound from "./pages/NotFound";
 
@@ -29,6 +30,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/articles" element={<ArticlesPage />} />
             <Route path="/articles/:slug" element={<ArticleDetail />} />   {/* ⬅ detail */}
             <Route path="*" element={<NotFound />} />
           </Routes>

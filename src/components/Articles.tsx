@@ -64,7 +64,7 @@ export default function Articles() {
   if (articles.length === 0) return null;
 
   return (
-    <section id="articles" className="section-spacing section-padding">
+    <section id="articles" className="section-spacing section-padding scroll-mt-24">
         <div className="max-w-6xl mx-auto">
         <h2 className="section-title text-center gradient-text mb-8">
           Články placeholder nadpis

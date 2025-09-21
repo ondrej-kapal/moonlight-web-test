@@ -27,16 +27,16 @@ const About = () => {
               </p>
               <p>
                 V létě 2023 jsem úspěšně získala certifikace a od února 2024 se tetování stalo nejen mou vášní, ale i profesí. 
-                Nejraději pracuji s černobílými motivy – zvířata, portréty osob, postavy z her či pohádek – a ráda do nich přidávám i barevné akcenty nebo prvky abstrakce.
+                Nejraději pracuji s černobílými motivy, jako jsou zvířata, portréty osob, postavy z her či pohádek a ráda do nich přidávám i barevné akcenty nebo prvky abstrakce.
               </p>
               <p>
                 Každý návrh tvořím na míru, ať už jde o nápis, portrét, nebo originální abstraktní vzor. 
                 Neustále se učím a zdokonaluji, protože věřím, že tetování je nekonečná cesta růstu, inspirace a tvrdé práce.
-                Pro mě je každé tetování víc než jen obrázek na kůži – je to spojení s klientem, důvěra a společný proces tvorby, jehož výsledkem je originální dílo, které nosíš s hrdostí celý život.
+                Pro mě je každé tetování víc než jen obrázek na kůži - je to spojení s klientem, důvěra a společný proces tvorby, jehož výsledkem je originální dílo, které nosíš s hrdostí celý život.
               </p>
               <p>
                 Každý kousek chci udělat speciální. 
-                Všechny návrhy kreslím ručně – nepoužívám AI ani nekopíruji cizí práce.
+                Všechny návrhy kreslím ručně, nepoužívám AI ani nekopíruji cizí práce.
               </p>
               <p>
                 Cítíš, že by to mohl být match? Pak neváhej, rezervuj si termín nebo mi jednoduše napiš. 🙂

@@ -14,18 +14,28 @@ const Index = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (!location.hash) return; // žádný hash -> nic nedělám
+    if (!location.hash) return;
 
     const id = decodeURIComponent(location.hash.slice(1)); // "#articles" -> "articles"
 
-    // Počkej, až se stránka vyrenderuje (sekce jsou v DOM), a pak scroll
-    requestAnimationFrame(() => {
+    // Opakovaně zkus najít element (kvůli časování renderu po navigaci)
+    let tries = 0;
+    const maxTries = 20; // ~1s při 50ms intervalu
+    const interval = setInterval(() => {
       const el = document.getElementById(id);
+      tries++;
+
       if (el) {
+        // pokud máš sticky navbar, je fajn dát sekci className="scroll-mt-24"
         el.scrollIntoView({ behavior: "smooth", block: "start" });
+        clearInterval(interval);
+      } else if (tries >= maxTries) {
+        clearInterval(interval);
       }
-    });
-  }, [location.hash]);
+    }, 50);
+
+    return () => clearInterval(interval);
+  }, [location.key, location.hash]); // location.key zajistí, že efekt běží i při změně stránky
 
   return (
     <div className="min-h-screen bg-background">

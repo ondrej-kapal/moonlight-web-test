@@ -4,7 +4,8 @@ import path from "node:path";
 import fg from "fast-glob";
 import matter from "gray-matter";
 
-const ARTICLES_DIR = path.resolve("public/content/articles");
+const ROOT = process.cwd();
+const ARTICLES_DIR = path.join(ROOT, "public/content/articles");
 const OUTPUT_FILE = path.join(ARTICLES_DIR, "index.json");
 
 function toPublicUrl(absPath) {
@@ -14,9 +15,23 @@ function toPublicUrl(absPath) {
   return idx >= 0 ? norm.slice(idx + "/public".length) : norm;
 }
 
+function resolveCover(slug, val) {
+  if (!val) return null;
+  if (/^https?:\/\//i.test(val)) return val;      // externí URL
+  if (val.startsWith("/")) return val;            // absolutní cesta v /public
+  // relativní soubor vedle index.md
+  return toPublicUrl(path.join(ARTICLES_DIR, slug, val));
+}
+
 async function main() {
-  // najdi všechny složky s index.md
-  const entries = await fg("*/index.md", { cwd: ARTICLES_DIR, dot: false });
+  // najdi všechny články (složky s index.md); když dir neexistuje -> prázdné pole
+  let entries = [];
+  try {
+    entries = await fg("*/index.md", { cwd: ARTICLES_DIR, dot: false });
+  } catch {
+    entries = [];
+  }
+
   const items = [];
 
   for (const rel of entries) {
@@ -28,10 +43,7 @@ async function main() {
     const title = data.title ?? slug;
     const dateIso = data.date ? new Date(data.date).toISOString() : null;
     const excerpt = data.excerpt ?? "";
-
-    // cover může být relativní soubor vedle index.md
-    const coverAbs = data.cover ? path.join(ARTICLES_DIR, slug, data.cover) : null;
-    const cover = coverAbs ? toPublicUrl(coverAbs) : null;
+    const cover = resolveCover(slug, data.cover);
 
     // když není datum, použij mtime souboru pro řazení
     let sortDate = dateIso;
@@ -43,21 +55,39 @@ async function main() {
     items.push({
       slug,
       title,
-      date: sortDate,   // FE si to formátuje do CZ
+      date: sortDate,      // FE si formátuje do CZ
       excerpt,
-      cover,            // FE očekává jako "image"
-      // readTime si můžeš doplnit později – tady ho zatím negenerujeme
+      cover,               // FE očekává jako "image"
+      readTime: data.readTime ?? undefined,
     });
   }
 
   // novější první
   items.sort((a, b) => (a.date < b.date ? 1 : -1));
 
-  await fs.writeFile(OUTPUT_FILE, JSON.stringify(items, null, 2), "utf8");
-  console.log(`✔ Vygenerováno: ${OUTPUT_FILE} (${items.length} položek)`);
+  // zapiš jen, když je změna (eliminuje nekonečné smyčky s watcherem)
+  const json = JSON.stringify(items, null, 2);
+
+  // zajisti, že cílová složka existuje
+  await fs.mkdir(ARTICLES_DIR, { recursive: true });
+
+  let prev = null;
+  try {
+    prev = await fs.readFile(OUTPUT_FILE, "utf8");
+  } catch {
+    // soubor ještě neexistuje – v pořádku
+  }
+
+  if (prev === json) {
+    console.log(`[CONTENT] ✔ Manifest beze změny (${items.length} položek)`);
+    return;
+  }
+
+  await fs.writeFile(OUTPUT_FILE, json, "utf8");
+  console.log(`[CONTENT] ✔ Vygenerováno: ${OUTPUT_FILE} (${items.length} položek)`);
 }
 
 main().catch((e) => {
-  console.error("✖ Chyba generování manifestu:", e);
+  console.error("[CONTENT] ✖ Chyba generování manifestu:", e);
   process.exit(1);
 });
