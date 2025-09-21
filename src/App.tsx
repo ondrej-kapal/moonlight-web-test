@@ -1,3 +1,4 @@
+// src/App.tsx
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,10 +17,13 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
+          {/* ⬇ Vracíme zpět, aby homepage byla opět tvoje funkční Index stránka */}
           <Route path="/" element={<HomePage />} />
-          {/* přesměr na statický Decap CMS */}
+
+          {/* ⬇ /admin posíláme na public/admin/index.html */}
           <Route path="/admin/*" element={<AdminRedirect />} />
-          {/* catch-all musí být poslední */}
+
+          {/* ⬇ Catch-all necháváme beze změny */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
@@ -28,3 +32,4 @@ const App = () => (
 );
 
 export default App;
+

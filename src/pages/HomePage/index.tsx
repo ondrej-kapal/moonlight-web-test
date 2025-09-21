@@ -1,25 +1,27 @@
-import Navbar from "@/components/Navbar";
-import About from "@/sections/About";
-import StylesProcess from "@/sections/StylesProcess";
-import Portfolio from "@/sections/Portfolio";
-import ArticlesCare from "@/sections/ArticlesCare";
-import Studio from "@/sections/Studio";
-import Designs from "@/sections/Designs";
-import ContactBooking from "@/sections/ContactBooking";
+import Navigation from '@/components/Navbar';
+import Hero from '@/components/Hero';
+import About from '@/components/About';
+import Styles from '@/components/Styles';
+import Portfolio from '@/components/Portfolio';
+import Articles from '@/components/Articles';
+import Studio from '@/components/Studio';
+import FreeDesigns from '@/components/FreeDesigns';
+import Contact from '@/components/Contact';
 
-export default function HomePage() {
+const Index = () => {
   return (
-    <>
-      <Navbar />
-      <main>
-        <About />
-        <StylesProcess />
-        <Portfolio />
-        <ArticlesCare />
-        <Studio />
-        <Designs />
-        <ContactBooking />
-      </main>
-    </>
+    <div className="min-h-screen bg-background">
+      <Navigation />
+      <Hero />
+      <About />
+      <Styles />
+      <Portfolio />
+      <Articles />
+      <Studio />
+      <FreeDesigns />
+      <Contact />
+    </div>
   );
-}
+};
+
+export default Index;
