@@ -1,10 +1,60 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Tattoo Studio Design System - Dark & Elegant with Red & Gold Accents */
+/* Moonlight Tatto Studio
+
+--ml-accent: #4cb4e7; */
+
+/* === Lato (lokálně) === */
+@font-face {
+  font-family: "Lato";
+  src: url("/fonts/lato/Lato-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("/fonts/lato/Lato-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("/fonts/lato/Lato-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("/fonts/lato/Lato-LightItalic.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("/fonts/lato/Lato-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Lato";
+  src: url("/fonts/lato/Lato-BlackItalic.ttf") format("truetype");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@layer base {
+  html {
+    font-family: theme("fontFamily.sans");
+  }
+}
 
 @layer base {
   :root {
@@ -29,6 +79,8 @@
 
     --accent: 43 96% 56%;
     --accent-foreground: 0 0% 10%;
+
+    --ml-accent: #4cb4e7; 
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
@@ -76,11 +128,10 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     background: hsl(var(--tattoo-black));
-    font-family: 'Inter', sans-serif;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: theme("fontFamily.sans");
   }
 }
 
@@ -109,12 +160,10 @@
 
   .hero-title {
     @apply text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight;
-    font-family: 'Playfair Display', serif;
   }
 
   .section-title {
     @apply text-4xl md:text-5xl font-bold mb-8;
-    font-family: 'Playfair Display', serif;
   }
 
   .card-hover {
