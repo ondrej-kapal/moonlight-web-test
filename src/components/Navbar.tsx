@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 
-const HEADER_HEIGHT = 64; // h-16
+const HEADER_HEIGHT = 89; // h-28
 
 // 1) Menu items
 const MENU: { id: string; label: string }[] = [
@@ -12,7 +12,7 @@ const MENU: { id: string; label: string }[] = [
   // { id: "studio", label: "Studio" },      // deprecated
   { id: "designs", label: "Volné návrhy" },
   { id: "contact", label: "Kontakt" },
-  { id: "reservations", label: "Rezervace" }, 
+  { id: "reservations", label: "REREZERVACE" }, 
 ];
 
 // 2) Alias menu-id -> real DOM id
@@ -79,32 +79,60 @@ export default function Navbar() {
         <div className="h-full flex items-center justify-between gap-4">
           
           {/* Menu (desktop) aligned left */}
-          <nav className="flex items-center gap-8">
+          <nav className="flex flex-1 items-center gap-8">
           {MENU.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={[
-                "text-sm font-medium transition-colors duration-300",
-                "hover:text-tattoo-red",
-                active === item.id ? "text-tattoo-red" : "text-foreground/80",
-              ].join(" ")}
+              className={
+                [
+                  "text-xl font-medium transition-colors duration-300",
+                  item.id === "reservations"
+                    ? "text-[color:var(--ml-accent)]"
+                    : "hover:text-[color:var(--ml-accent)]",
+                  item.id === "reservations"
+                    ? ""
+                    : active === item.id
+                      ? "text-[color:var(--ml-accent)]"
+                      : "text-foreground/80",
+                ].join(" ")
+              }
             >
               {item.label}
             </button>
           ))}
           </nav>
-          
+
+          {/* Instagram */}
+          <a
+            href="https://www.instagram.com/_m00nlight_tatts/" 
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black  text-background hover:opacity-90 transition"
+            aria-label="Instagram"
+          >
+            <img src="/brand/icon-instagram.png" alt="" className="w-5 h-5 pointer-events-none" />
+          </a>
+        
+          {/* E-mail */}
+          <a
+            href="mailto:kubikovadk@gmail.com" 
+            className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-background hover:opacity-90 transition"
+            aria-label="Napsat e-mail"
+          >
+            <img src="/brand/icon-mail.png" alt="" className="w-5 h-5 pointer-events-none" />
+          </a>          
+
           {/* Logo on the right side */}
           <button
             onClick={() => scrollToSection("home")}
-            className="inline-flex items-center gap-2 group"
+            className="inline-flex items-center gap-2 group ml-auto"
             aria-label="Na úvod"
           >
             <img
               src="/brand/moon-splash.png"
               alt="Moonlight"
-              className="h-8 w-auto transition-transform duration-300 group-hover:scale-[1.03]"
+              className="h-20 w-auto transition-transform duration-300 group-hover:scale-[1.03]"
               fetchPriority="high"
             />
           </button>
@@ -112,37 +140,6 @@ export default function Navbar() {
           {/* Akce vpravo */}
           <div className="flex items-center gap-2">
             {/* Můžeš chtít, aby CTA bylo vizuálně stejné jako „Rezervace“ v menu */}
-{/* ─────────────────────────────────────────────────────────
-            <Button
-              variant="hero"
-              size="sm"
-              onClick={() => scrollToSection("reservations")}
-              className="hidden md:flex"
-            >
-              Rezervovat
-            </Button>
-            
-            {/* Instagram */}
-            {/*}
-            <a
-              href="https://www.instagram.com/_m00nlight_tatts/" 
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black  text-background hover:opacity-90 transition"
-              aria-label="Instagram"
-            >
-              <img src="/brand/icon-instagram.png" alt="" className="w-5 h-5 pointer-events-none" />
-            </a>
-{/* ─────────────────────────────────────────────────────────           
-            {/* E-mail */}
-            {/*
-            <a
-              href="mailto:kubikovadk@gmail.com" 
-              className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-background hover:opacity-90 transition"
-              aria-label="Napsat e-mail"
-            >
-              <img src="/brand/icon-mail.png" alt="" className="w-5 h-5 pointer-events-none" />
-            </a>
 
 {/* ─────────────────────────────────────────────────────────
 
