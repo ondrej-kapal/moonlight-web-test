@@ -11,7 +11,7 @@ const MENU: { id: string; label: string }[] = [
   { id: "articles", label: "Články" },
   // { id: "studio", label: "Studio" },      // deprecated
   { id: "designs", label: "Volné návrhy" },
-  { id: "contact", label: "Kontakt & rezervace" },
+  { id: "contact", label: "Kontakt" },
   { id: "reservations", label: "Rezervace" }, 
 ];
 
@@ -111,6 +111,7 @@ export default function Navbar() {
           {/* Akce vpravo */}
           <div className="flex items-center gap-2">
             {/* Můžeš chtít, aby CTA bylo vizuálně stejné jako „Rezervace“ v menu */}
+{/* ─────────────────────────────────────────────────────────
             <Button
               variant="hero"
               size="sm"
@@ -119,25 +120,27 @@ export default function Navbar() {
             >
               Rezervovat
             </Button>
-
+───────────────────────────────────────────────────────── */}
             {/* E-mail */}
-            <a
-              href="mailto:info@moonlight.example" /* ← uprav */
-              className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-foreground text-background hover:opacity-90 transition"
-              aria-label="Napsat e-mail"
-            >
-              <img src="/brand/icon-mail.png" alt="" className="w-5 h-5" />
-            </a>
-
+            
             {/* Instagram */}
             <a
-              href="https://instagram.com/your_profile" /* ← uprav */
+              href="https://www.instagram.com/_m00nlight_tatts/" 
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-foreground text-background hover:opacity-90 transition"
+              className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black  text-background hover:opacity-90 transition"
               aria-label="Instagram"
             >
-              <img src="/brand/icon-instagram.png" alt="" className="w-5 h-5" />
+              <img src="/brand/icon-instagram.png" alt="" className="w-5 h-5 pointer-events-none" />
+            </a>
+            
+            {/* E-mail */}
+            <a
+              href="mailto:kubikovadk@gmail.com" 
+              className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-background hover:opacity-90 transition"
+              aria-label="Napsat e-mail"
+            >
+              <img src="/brand/icon-mail.png" alt="" className="w-5 h-5 pointer-events-none" />
             </a>
 
             {/* Mobile burger (logiku přidáme později) */}
