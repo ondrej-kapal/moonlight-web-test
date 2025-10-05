@@ -45,7 +45,7 @@ const Index = () => {
       <Styles />
       <Portfolio />
       <Articles />
-      <Studio />
+  {/* <Studio /> */}
       <FreeDesigns />
       <Contact />
     </div>
