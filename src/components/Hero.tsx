@@ -13,12 +13,14 @@ const Hero = () => {
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img 
-          src={heroImage} 
-          alt="Tattoo studio atmosphere" 
-          className="w-full h-full object-cover"
+        <video src="/brand/HeroVideo.mov" 
+          controls 
+          autoPlay 
+          loop 
+          muted 
+          style={{ width: '100%' }} 
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-tattoo-black/70 via-tattoo-black/60 to-tattoo-black/80"></div>
+        <div className="absolute inset-0 from-tattoo-black/70 via-tattoo-black/60 to-tattoo-black/80"></div>
       </div>
       {/* Prázdný obsah, vše odstraněno dle požadavku */}
     </section>
