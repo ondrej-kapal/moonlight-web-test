@@ -6,7 +6,7 @@ import About from "@/components/About";
 import Styles from "@/components/Styles";
 import Portfolio from "@/components/Portfolio";
 import Articles from "@/components/Articles";
-import Studio from "@/components/Reservations";
+// import Studio from "@/components/Reservations";
 import FreeDesigns from "@/components/FreeDesigns";
 import Contact from "@/components/Contact";
 
