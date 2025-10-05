@@ -77,36 +77,37 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-4 h-full">
         <div className="h-full flex items-center justify-between gap-4">
-          {/* Logo vlevo */}
+          
+          {/* Menu (desktop) aligned left */}
+          <nav className="flex items-center gap-8">
+          {MENU.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => scrollToSection(item.id)}
+              className={[
+                "text-sm font-medium transition-colors duration-300",
+                "hover:text-tattoo-red",
+                active === item.id ? "text-tattoo-red" : "text-foreground/80",
+              ].join(" ")}
+            >
+              {item.label}
+            </button>
+          ))}
+          </nav>
+          
+          {/* Logo on the right side */}
           <button
             onClick={() => scrollToSection("home")}
             className="inline-flex items-center gap-2 group"
             aria-label="Na úvod"
           >
             <img
-              src="/brand/logo-moonlight.png"
+              src="/brand/moon-splash.png"
               alt="Moonlight"
               className="h-8 w-auto transition-transform duration-300 group-hover:scale-[1.03]"
               fetchPriority="high"
             />
           </button>
-
-          {/* Menu (desktop) */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {MENU.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={[
-                  "text-sm font-medium transition-colors duration-300",
-                  "hover:text-tattoo-red",
-                  active === item.id ? "text-tattoo-red" : "text-foreground/80",
-                ].join(" ")}
-              >
-                {item.label}
-              </button>
-            ))}
-          </nav>
 
           {/* Akce vpravo */}
           <div className="flex items-center gap-2">
@@ -120,10 +121,9 @@ export default function Navbar() {
             >
               Rezervovat
             </Button>
-───────────────────────────────────────────────────────── */}
-            {/* E-mail */}
             
             {/* Instagram */}
+            {/*}
             <a
               href="https://www.instagram.com/_m00nlight_tatts/" 
               target="_blank"
@@ -133,8 +133,9 @@ export default function Navbar() {
             >
               <img src="/brand/icon-instagram.png" alt="" className="w-5 h-5 pointer-events-none" />
             </a>
-            
+{/* ─────────────────────────────────────────────────────────           
             {/* E-mail */}
+            {/*
             <a
               href="mailto:kubikovadk@gmail.com" 
               className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-background hover:opacity-90 transition"
@@ -143,13 +144,17 @@ export default function Navbar() {
               <img src="/brand/icon-mail.png" alt="" className="w-5 h-5 pointer-events-none" />
             </a>
 
+{/* ─────────────────────────────────────────────────────────
+
             {/* Mobile burger (logiku přidáme později) */}
+            {/*
             <Button variant="ghost" size="icon" className="lg:hidden">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </Button>
-          </div>
+ ───────────────────────────────────────────────────────── */}
+           </div>
         </div>
       </div>
     </header>
