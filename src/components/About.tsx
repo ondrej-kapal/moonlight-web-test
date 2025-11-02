@@ -3,27 +3,23 @@ import artistPortrait from '@/assets/artist-portrait.jpg';
 
 const About = () => {
   return (
-    <section id="about" className="section-spacing section-padding">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="section-title text-center gradient-text mb-16">
-          O mně
-        </h2>
+    <section id="about" className="relative bg-background">
+      {/* Accent divider that visually connects Hero and About */}
+      <div className="w-full h-1 bg-[color:var(--ml-accent)]" />
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className="max-w-6xl mx-auto px-4 py-20">
+        <div className="grid lg:grid-cols-2 gap-12 items-start">
+          {/* Left: headings + content */}
           <div className="space-y-6">
-            <h3 className="text-3xl font-bold gradient-text-gold mb-6">
-              Vlastní svět umění
-            </h3>
-            
-            <div className="space-y-4 text-lg leading-relaxed text-foreground/90">
+            <h2 className="text-3xl lg:text-4xl font-semibold text-[color:var(--ml-accent)]">O mně</h2>
+            <div className="space-y-4 text-lg leading-relaxed text-foreground/90 mt-4">
               <p>
-                Jmenuji se Dana a tetování je součástí mého života už od střední školy. 
+                Jmenuji se Dana a tetování je součástí mého života už od střední školy.
                 Ve svých 17 letech jsem si za našetřené peníze pořídila první tetovací strojek a od té doby jsem věděla, že tohle je moje cesta.
               </p>
               <p>
-                Kreslení mě provází od dětství - už od 12 let jsem každou volnou chvíli trávila u papíru a prostřednictvím umění si vytvářela svůj vlastní svět. 
-                V tom reálném jsem se totiž často cítila trochu stranou. 
-                Tetování mě fascinovalo odjakživa, a když se k tomu přidaly mé kreslířské dovednosti, všechno do sebe zapadlo.
+                Kreslení mě provází již od dětství, kdy jsem každou volnou chvíli trávila u papíru a prostřednictvím umění si vytvářela svůj vlastní svět.
+                V tom reálném jsem se totiž často cítila trochu stranou. Tetování mě fascinovalo odjakživa, a když se k tomu přidaly mé kreslířské dovednosti, všechno do sebe zapadlo.
               </p>
               <p>
                 V létě 2023 jsem úspěšně získala certifikace a od února 2024 se tetování stalo nejen mou vášní, ale i profesí. 
@@ -43,36 +39,39 @@ const About = () => {
               </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mt-8">
-              <Card className="p-4 card-hover">
-                <div className="text-center">
-                  <div className="text-2xl font-bold gradient-text mb-2">TEXT</div>
-                  <div className="text-sm text-muted-foreground">PLACEHOLDER</div>
-                </div>
-              </Card>
-              
-              <Card className="p-4 card-hover">
-                <div className="text-center">
-                  <div className="text-2xl font-bold gradient-text-gold mb-2">TEXT 2</div>
-                  <div className="text-sm text-muted-foreground">PLACEHOLDER</div>
-                </div>
-              </Card>
+            {/* On larger screens 'Styly' will be displayed to the right under the portrait */}
+            {/* Keep small-screen flow (will stack below content) */}
+            <div className="mt-8 lg:hidden">
+              <div className="text-3xl lg:text-4xl font-semibold text-[color:var(--ml-accent)] mb-4">Styly</div>
+                <ul className="space-y-4 text-lg leading-relaxed text-foreground/90 mt-4">
+                  <li>realistika</li>
+                  <li>blackwork</li>
+                  <li>zvířata</li>
+                </ul>
             </div>
           </div>
 
-          <div className="relative">
-            <div className="relative overflow-hidden rounded-2xl">
-              <img 
-                src={artistPortrait} 
-                alt="Portrét tattoo umělce" 
-                className="w-full h-[600px] object-cover card-hover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-tattoo-black/30 to-transparent"></div>
+          {/* Right: portrait image and the 'Styly' block under it on larger screens */}
+          <div className="flex justify-end">
+            <div className="w-full max-w-md flex flex-col items-start">
+              <div className="w-full overflow-hidden rounded-2xl shadow-lg">
+                <img
+                  src={artistPortrait}
+                  alt="Artist portrait"
+                  className="w-full h-auto object-cover block"
+                />
+              </div>
+
+              {/* 'Styly' appears under the portrait on large screens and is hidden on small */}
+              <div className="hidden lg:block mt-6 w-48">
+                <div className="text-3xl lg:text-4xl font-semibold text-[color:var(--ml-accent)] mb-4">Styly</div>
+                <ul className="space-y-4 text-lg leading-relaxed text-foreground/90 mt-4 list-disc list-inside space-y-1">
+                  <li>realistika</li>
+                  <li>blackwork</li>
+                  <li>zvířata</li>
+                </ul>
+              </div>
             </div>
-            
-            {/* Decorative elements */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-tattoo-red to-tattoo-red-dark rounded-full opacity-20"></div>
-            <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-gradient-to-br from-tattoo-gold to-tattoo-gold-dark rounded-full opacity-30"></div>
           </div>
         </div>
       </div>

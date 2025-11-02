@@ -29,7 +29,6 @@ export default function Navbar() {
     const onScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      // zvýraznění: projdeme sekce odspodu, a jakmile jsme nad jejich topem, bereme ji jako aktivní
       const y = window.scrollY + HEADER_HEIGHT + 24; // malý buffer
       let found: string | null = null;
 
@@ -43,8 +42,12 @@ export default function Navbar() {
         }
       }
 
-      // Priorita: když jsme v #contact a máme v menu i "reservations", zvýrazníme "Rezervace"
-      if (found === "contact" && MENU.some(m => m.id === "reservations")) {
+      // Pokud jsme nad první sekcí, nastav aktivní na "home"
+      const firstSectionId = toDomId(MENU[0].id);
+      const firstSection = document.getElementById(firstSectionId);
+      if (firstSection && window.scrollY + HEADER_HEIGHT + 24 < firstSection.offsetTop) {
+        setActive("home");
+      } else if (found === "contact" && MENU.some(m => m.id === "reservations")) {
         setActive("reservations");
       } else if (found) {
         setActive(found);
