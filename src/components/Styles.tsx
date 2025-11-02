@@ -1,118 +1,69 @@
 import { Card } from '@/components/ui/card';
 
+const processSteps = [
+  {
+    step: '1',
+    title: 'Konzultace',
+    description: 'Prodiskutujeme vaše představy, styl a umístění tetování.'
+  },
+  {
+    step: '2',
+    title: 'Návrh',
+    description: 'Vytvořím jedinečný návrh přesně podle vašich požadavků.'
+  },
+  {
+    step: '3',
+    title: 'Schválení',
+    description: 'Návrh upravíme dokud nebudete s výsledkem 100% spokojeni.'
+  },
+  {
+    step: '4',
+    title: 'Tetování',
+    description: 'Profesionální provedení v sterilním prostředí s nejvyšší péčí.'
+  }
+];
+
 const Styles = () => {
-  const styles = [
-    {
-      name: "Realistické portréty",
-      description: "Detailní a věrné portréty lidí a zvířat s důrazem na preciznost a emoce.",
-      features: ["Fotorealistická kvalita", "Jemné stínování", "Expresivní detaily"]
-    },
-    {
-      name: "Geometrické vzory",
-      description: "Moderní geometrické kompozice kombinující přesnost a uměleckou kreativitu.",
-      features: ["Čisté linky", "Symetrické vzory", "Minimalistický přístup"]
-    },
-    {
-      name: "Černobílé kompozice",
-      description: "Klasické černobílé tetování s důrazem na kontrast a kompozici.",
-      features: ["Silné kontrasty", "Detailní práce", "Časeless design"]
-    }
-  ];
-
-  const processSteps = [
-    {
-      step: "01",
-      title: "Konzultace",
-      description: "Prodiskutujeme vaše představy, styl a umístění tetování."
-    },
-    {
-      step: "02", 
-      title: "Návrh",
-      description: "Vytvořím jedinečný návrh přesně podle vašich požadavků."
-    },
-    {
-      step: "03",
-      title: "Schválení",
-      description: "Návrh upravíme dokud nebudete s výsledkem 100% spokojeni."
-    },
-    {
-      step: "04",
-      title: "Tetování",
-      description: "Profesionální provedení v sterilním prostředí s nejvyšší péčí."
-    }
-  ];
-
   return (
-    <section id="styles" className="section-spacing section-padding bg-tattoo-grey/30">
+    <section id="styles" className="section-spacing section-padding">
       <div className="max-w-6xl mx-auto">
-        <h2 className="section-title text-center gradient-text mb-16">
-          Styly & Proces
-        </h2>
+        {/* Blue frame around the whole section on large screens */}
+        <div className="lg:border-4 lg:border-[color:var(--ml-accent)] lg:rounded-2xl lg:p-4 lg:overflow-hidden">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
 
-        {/* Styles */}
-        <div className="mb-20">
-          <h3 className="text-3xl font-bold gradient-text-gold mb-8 text-center">
-            Moje specializace
-          </h3>
-          
-          <div className="grid md:grid-cols-3 gap-6">
-            {styles.map((style, index) => (
-              <Card key={index} className="p-6 card-hover h-full">
-                <h4 className="text-xl font-bold gradient-text mb-4">{style.name}</h4>
-                <p className="text-muted-foreground mb-6 leading-relaxed">
-                  {style.description}
-                </p>
-                <ul className="space-y-2">
-                  {style.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center text-sm">
-                      <div className="w-2 h-2 bg-tattoo-red rounded-full mr-3"></div>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </Card>
-            ))}
+          {/* Left: large framed image */}
+          <div className="flex justify-start">
+            <div className="w-full max-w-xl rounded-md shadow-lg overflow-hidden">
+              <img
+                src="/brand/tattoo-machine.jpg"
+                alt="Tattoo machine on a table"
+                className="w-full h-auto object-cover block"
+              />
+            </div>
           </div>
-        </div>
 
-        {/* Process */}
-        <div>
-          <h3 className="text-3xl font-bold gradient-text-gold mb-8 text-center">
-            Jak probíhá proces
-          </h3>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {processSteps.map((item, index) => (
-              <Card key={index} className="p-6 card-hover text-center relative">
-                <div className="text-4xl font-bold gradient-text mb-4">{item.step}</div>
-                <h4 className="text-lg font-bold mb-3">{item.title}</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {item.description}
-                </p>
-                
-                {/* Connector line */}
-                {index < processSteps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-3 w-6 h-px bg-gradient-to-r from-tattoo-red to-transparent"></div>
-                )}
-              </Card>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-16">
-          <p className="text-lg text-muted-foreground mb-6">
-            Nejste si jisti, který styl je pro vás ten pravý?
-          </p>
-          <Card className="p-8 max-w-md mx-auto">
-            <h4 className="text-xl font-bold gradient-text mb-4">Konzultace zdarma</h4>
-            <p className="text-sm text-muted-foreground mb-6">
-              Domluvte si nezávaznou konzultaci a společně najdeme perfektní řešení.
+          {/* Right: Proces */}
+          <div>
+            <h2 className="text-4xl lg:text-5xl font-semibold text-[color:var(--ml-accent)] mb-6">Proces</h2>
+            <p className="text-lg text-foreground/90 mb-8">
+              Každý návrh tvořím na míru, ať už jde o nápis, portrét, nebo originální abstraktní vzor.
             </p>
-            <button className="w-full bg-gradient-to-r from-tattoo-red to-tattoo-red-dark text-white py-3 px-6 rounded-lg hover:shadow-lg hover:shadow-tattoo-red/50 transition-all duration-300">
-              Domluvit konzultaci
-            </button>
-          </Card>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              {processSteps.map((s, idx) => (
+                <div key={idx} className="flex items-start gap-4">
+                  <div className="flex-shrink-0 w-10 h-10 rounded-full bg-[color:var(--ml-accent)] text-white flex items-center justify-center font-bold text-lg">
+                    {s.step}
+                  </div>
+                  <div>
+                    <div className="text-lg font-semibold text-[color:var(--ml-accent)] mb-1 italic">{s.title}</div>
+                    <div className="text-sm text-foreground/90 leading-relaxed">{s.description}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          </div>
         </div>
       </div>
     </section>

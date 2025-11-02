@@ -1,5 +1,5 @@
-import { Card } from '@/components/ui/card';
-import artistPortrait from '/public/brand/artist-portrait.jpg';
+// Using public image path directly so it resolves after build
+import artistPortraitPath from '/brand/artist-portrait.jpg';
 
 const About = () => {
   return (
@@ -26,13 +26,11 @@ const About = () => {
                 Nejraději pracuji s černobílými motivy, jako jsou zvířata, portréty osob, postavy z her či pohádek a ráda do nich přidávám i barevné akcenty nebo prvky abstrakce.
               </p>
               <p>
-                Každý návrh tvořím na míru, ať už jde o nápis, portrét, nebo originální abstraktní vzor. 
                 Neustále se učím a zdokonaluji, protože věřím, že tetování je nekonečná cesta růstu, inspirace a tvrdé práce.
                 Pro mě je každé tetování víc než jen obrázek na kůži - je to spojení s klientem, důvěra a společný proces tvorby, jehož výsledkem je originální dílo, které nosíš s hrdostí celý život.
               </p>
               <p>
-                Každý kousek chci udělat speciální. 
-                Všechny návrhy kreslím ručně, nepoužívám AI ani nekopíruji cizí práce.
+                Všechny návrhy kreslím ručně, nepoužívám AI ani nekopíruji cizí práce. Chci, aby byl každý kousek specialní.
               </p>
               <p>
                 Cítíš, že by to mohl být match? Pak neváhej, rezervuj si termín nebo mi jednoduše napiš. 🙂
@@ -53,23 +51,26 @@ const About = () => {
 
           {/* Right: portrait image and the 'Styly' block under it on larger screens */}
           <div className="flex justify-end">
-            <div className="w-full max-w-md flex flex-col items-start">
-              <div className="w-full overflow-hidden rounded-2xl shadow-lg">
-                <img
-                  src={artistPortrait}
-                  alt="Artist portrait"
-                  className="w-full h-auto object-cover block"
-                />
-              </div>
+            <div className="w-full max-w-md">
+              {/* Blue frame on large screens that wraps the portrait + 'Styly' list */}
+              <div className="lg:border-4 lg:border-[color:var(--ml-accent)] lg:rounded-2xl lg:p-2 lg:overflow-hidden">
+                <div className="w-full overflow-hidden rounded-2xl shadow-lg">
+                  <img
+                    src={artistPortraitPath}
+                    alt="Artist portrait"
+                    className="w-full h-auto object-cover block"
+                  />
+                </div>
 
-              {/* 'Styly' appears under the portrait on large screens and is hidden on small */}
-              <div className="hidden lg:block mt-6 w-48">
-                <div className="text-3xl lg:text-4xl font-semibold text-[color:var(--ml-accent)] mb-4">Styly</div>
-                <ul className="space-y-4 text-lg leading-relaxed text-foreground/90 mt-4 list-disc list-inside space-y-1">
-                  <li>realistika</li>
-                  <li>blackwork</li>
-                  <li>zvířata</li>
-                </ul>
+                {/* 'Styly' appears under the portrait on large screens and is hidden on small */}
+                <div className="hidden lg:block mt-6 w-48">
+                  <div className="text-3xl lg:text-4xl font-semibold text-[color:var(--ml-accent)] mb-4">Styly</div>
+                  <ul className="space-y-4 text-lg leading-relaxed text-foreground/90 mt-4 list-disc list-inside space-y-1">
+                    <li>realistika</li>
+                    <li>blackwork</li>
+                    <li>zvířata</li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
