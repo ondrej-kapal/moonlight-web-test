@@ -39,12 +39,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Navigation />
-      <Hero />
-      <About />
-      <Styles />
-      <Portfolio />
-      <Articles />
+  <Navigation />
+  <Hero />
+  <About />
+  <Styles />
+  <Portfolio />
+  <Articles />
   {/* <Studio /> */}
       <FreeDesigns />
       <Contact />

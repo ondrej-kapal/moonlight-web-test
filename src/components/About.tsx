@@ -4,8 +4,6 @@ import artistPortraitPath from '/brand/artist-portrait.jpg';
 const About = () => {
   return (
     <section id="about" className="relative bg-background">
-      {/* Accent divider that visually connects Hero and About */}
-      <div className="w-full h-1 bg-[color:var(--ml-accent)]" />
 
       <div className="max-w-6xl mx-auto px-4 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-start">
@@ -53,7 +51,6 @@ const About = () => {
           <div className="flex justify-end">
             <div className="w-full max-w-md">
               {/* Blue frame on large screens that wraps the portrait + 'Styly' list */}
-              <div className="lg:border-4 lg:border-[color:var(--ml-accent)] lg:rounded-2xl lg:p-2 lg:overflow-hidden">
                 <div className="w-full overflow-hidden rounded-2xl shadow-lg">
                   <img
                     src={artistPortraitPath}
@@ -71,7 +68,6 @@ const About = () => {
                     <li>zvířata</li>
                   </ul>
                 </div>
-              </div>
             </div>
           </div>
         </div>
