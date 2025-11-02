@@ -114,7 +114,7 @@ export default function Navbar() {
             className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black  text-background hover:opacity-90 transition"
             aria-label="Instagram"
           >
-            <img src="/brand/icon-instagram.png" alt="" className="w-5 h-5 pointer-events-none" />
+            <img src="/public/assets/icon-instagram.png" alt="" className="w-5 h-5 pointer-events-none" />
           </a>
         
           {/* E-mail */}
@@ -123,7 +123,7 @@ export default function Navbar() {
             className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-black text-background hover:opacity-90 transition"
             aria-label="Napsat e-mail"
           >
-            <img src="/brand/icon-mail.png" alt="" className="w-5 h-5 pointer-events-none" />
+            <img src="/public/assets/icon-mail.png" alt="" className="w-5 h-5 pointer-events-none" />
           </a>          
 
           {/* Logo on the right side */}

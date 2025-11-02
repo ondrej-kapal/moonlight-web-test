@@ -1,5 +1,5 @@
 import { Card } from '@/components/ui/card';
-import artistPortrait from '@/assets/artist-portrait.jpg';
+import artistPortrait from '/public/brand/artist-portrait.jpg';
 
 const About = () => {
   return (
