@@ -10,7 +10,7 @@ const Portfolio = () => {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   useEffect(() => {
-    // Try to load portfolio content managed by Decap (static JSON in /content/portfolio/index.json)
+    // Try to load portfolio content managed by Decap (static JSON in /public/content/portfolio/index.json on production)
     fetch('/content/portfolio/index.json', { cache: 'no-cache' })
       .then((res) => res.ok ? res.json() : Promise.reject('no-json'))
       .then((data) => {
