@@ -66,13 +66,9 @@ export default function Articles() {
   return (
     <section id="articles" className="section-spacing section-padding scroll-mt-24">
         <div className="max-w-6xl mx-auto">
-        <h2 className="section-title text-center gradient-text mb-8">
-          Články placeholder nadpis
+        <h2 className="text-4xl lg:text-5xl font-semibold text-[color:var(--ml-accent)] mb-6 text-center">
+          Články
         </h2>
-        
-        <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Články placeholder text
-        </p>
         <div className="flex gap-6 overflow-x-auto pb-6 scroll-smooth">
           {articles.map((article) => (
             <Card key={article.id} className="flex-shrink-0 w-80 card-hover cursor-pointer group">

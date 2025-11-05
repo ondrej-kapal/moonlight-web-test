@@ -1,7 +1,10 @@
+# ...existing code...
 backend:
   # Zatím placeholder – autentizaci nastavíme později (GitHub backend).
   name: git-gateway
   branch: main
+
+local_backend: true
 
 # Media knihovna – explicitně uvedeme "file", ať projde schématem.
 # media_library:
@@ -19,9 +22,9 @@ collections:
     name: "articles"
     folder: "public/content/articles"
     create: true
-    path: "{{slug}}/index"      # -> content/articles/<slug>/index.md
+    path: "{{slug}}/index"
     extension: "md"
-    media_folder: ""            # -> média vedle index.md
+    media_folder: ""
     public_folder: ""
     fields:
       - { label: "Titulek", name: "title", widget: "string" }
@@ -32,7 +35,7 @@ collections:
       - { label: "Tagy", name: "tags", widget: "list", required: false }
 
   - label: "Portfolio"
-    name: "portfolio"
+    name: "portfolio_items"
     folder: "public/content/portfolio"
     create: true
     path: "{{slug}}/index"
@@ -67,3 +70,4 @@ collections:
         widget: "list"
         field: { label: "Obrázek", name: "image", widget: "image" }
       - { label: "Popis", name: "description", widget: "markdown", required: false }
+# ...existing code...

@@ -11,24 +11,24 @@ const Portfolio = () => {
 
   useEffect(() => {
     // Try to load portfolio content managed by Decap (static JSON in /public/content/portfolio/index.json on production)
-    fetch('/content/portfolio/index.json', { cache: 'no-cache' })
-      .then((res) => res.ok ? res.json() : Promise.reject('no-json'))
-      .then((data) => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const res = await fetch('/content/portfolio/index.json', { cache: 'no-cache' });
+        if (!res.ok) return; // manifest not present yet -> don't change items
+        const data = await res.json();
+        if (cancelled) return;
         if (Array.isArray(data.images)) {
-          setItems(data.images.slice(0, 8));
-        } else {
-          throw new Error('images missing');
+          const filtered = data.images.filter((it: any) => it && it.src).slice(0, 8);
+          setItems(filtered);
         }
-      })
-      .catch(() => {
-        // Fallback to local placeholders (use files under content/portfolio so Decap can manage them later)
-        setItems([
-          { src: '/content/portfolio/placeholder-1.svg', alt: 'Placeholder 1' },
-          { src: '/content/portfolio/placeholder-2.svg', alt: 'Placeholder 2' },
-          { src: '/content/portfolio/placeholder-3.svg', alt: 'Placeholder 3' },
-          { src: '/content/portfolio/placeholder-4.svg', alt: 'Placeholder 4' }
-        ]);
-      });
+      } catch {
+        // manifest isn't available or request failed — leave items as-is
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const openLightbox = (index: number) => setLightboxIndex(index);
@@ -42,6 +42,8 @@ const Portfolio = () => {
 
   // How many items we render in the grid (matches earlier slicing)
   const shownCount = Math.min(4, items.length);
+  // When there are no portfolio items, don't render the section (same UX as Articles)
+  if (items.length === 0) return null;
 
   return (
     <section id="portfolio" className="relative bg-background text-foreground">

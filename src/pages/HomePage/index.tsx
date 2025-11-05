@@ -9,6 +9,7 @@ import Articles from "@/components/Articles";
 // import Studio from "@/components/Reservations";
 import FreeDesigns from "@/components/FreeDesigns";
 import Contact from "@/components/Contact";
+import VersionBadge from "@/components/VersionBadge";
 
 const Index = () => {
   const location = useLocation();
@@ -48,6 +49,7 @@ const Index = () => {
   {/* <Studio /> */}
       <FreeDesigns />
       <Contact />
+      <VersionBadge />
     </div>
   );
 };

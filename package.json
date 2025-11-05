@@ -4,13 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -k -n VITE,CONTENT \"vite\" \"node scripts/content/watch-articles.mjs\"",
+  "version:build": "node scripts/build-version.mjs",
+  "dev": "npm run version:build && concurrently -k -n VITE,CONTENT,PORTF \"vite\" \"node scripts/content/watch-articles.mjs\" \"node scripts/content/watch-portfolio.mjs\"",
     "dev:solo": "vite",
-    "build": "vite build",
+    "build": "npm run version:build && vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "content:articles": "node scripts/content/build-articles.mjs"
+  "content:articles": "node scripts/content/build-articles.mjs",
+  "content:portfolio": "node scripts/content/build-portfolio.mjs",
+  "watch:portfolio": "node scripts/content/watch-portfolio.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",

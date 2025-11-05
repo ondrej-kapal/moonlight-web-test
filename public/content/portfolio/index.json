@@ -1,9 +1,8 @@
 {
-  "title": "Portfolio",
   "images": [
-    { "src": "/content/portfolio/placeholder-1.svg", "alt": "Placeholder 1" },
-    { "src": "/content/portfolio/placeholder-2.svg", "alt": "Placeholder 2" },
-    { "src": "/content/portfolio/placeholder-3.svg", "alt": "Placeholder 3" },
-    { "src": "/content/portfolio/placeholder-4.svg", "alt": "Placeholder 4" }
+    {
+      "src": "/content/portfolio/mýval-s-brkem/chatgpt-image-oct-10-2025-10_50_48-am.png",
+      "alt": ""
+    }
   ]
 }
