@@ -13,7 +13,7 @@ OAuth Client ID/Secret — they belong only in Vercel project env vars.**
 > Once step 7 passes end-to-end, this doc has served its purpose — delete it and remove its
 > pointers from `CLAUDE.md` and `README.md`.
 
-**Status:** 2026-07-19 — steps 1, 2, 5 done (deployed at `https://moonlight-web-test-oafd.vercel.app`, `base_url` fixed). Blocked on steps 3–4: `/api/auth` returns "OAuth is not configured (missing OAUTH_GITHUB_CLIENT_ID)" — create the GitHub OAuth App + set Vercel env vars, then Dana's access (6) and the end-to-end test (7).
+**Status:** 2026-07-19 — steps 1–5 done. Canonical domain is `https://moonlight-web-test.vercel.app` (a second stale Vercel project served `…-oafd.vercel.app` and caused env-var confusion — delete it from the dashboard). OAuth relay verified: `/api/auth` 302s to GitHub. Remaining: confirm the OAuth App callback URL uses the canonical domain, Dana's access (6), end-to-end test (7).
 
 ## Already done in the repo (don't redo)
 
@@ -30,14 +30,15 @@ OAuth Client ID/Secret — they belong only in Vercel project env vars.**
 
 - [x] 1. **Commit & push** the current working tree to `github.com/ondrej-kapal/moonlight-web-test` (branch `main`). *(Done — PR #1 merged to `main`, 2026-07-19.)*
 - [x] 2. **Vercel**: *Add New Project* → import the repo. Framework auto-detects as Vite; default
-   build (`npm run build`) and output (`dist/`) are correct. Assigned domain: `https://moonlight-web-test-oafd.vercel.app`
-- [ ] 3. **GitHub OAuth App**: github.com → *Settings → Developer settings → OAuth Apps → New OAuth App*.
-   - Homepage URL: `https://moonlight-web-test-oafd.vercel.app`
-   - **Authorization callback URL: `https://moonlight-web-test-oafd.vercel.app/api/callback`**
+   build (`npm run build`) and output (`dist/`) are correct. Assigned domain: `https://moonlight-web-test.vercel.app`
+- [x] 3. **GitHub OAuth App**: github.com → *Settings → Developer settings → OAuth Apps → New OAuth App*.
+   - Homepage URL: `https://moonlight-web-test.vercel.app`
+   - **Authorization callback URL: `https://moonlight-web-test.vercel.app/api/callback`**
    - Copy the Client ID, generate a Client Secret. (Dashboard only — do not paste into the repo.)
-- [ ] 4. **Vercel env vars** (project → Settings → Environment Variables):
-   `OAUTH_GITHUB_CLIENT_ID`, `OAUTH_GITHUB_CLIENT_SECRET`. Redeploy so functions pick them up.
-- [x] 5. **Fix `base_url`** in `public/admin/config.yml` to `https://moonlight-web-test-oafd.vercel.app`, commit, push. *(Done 2026-07-19.)*
+   *(App "Moonlight Tattoo" created 2026-07-19 — verify callback URL uses the canonical domain above, it may still point at the stale `-oafd` domain.)*
+- [x] 4. **Vercel env vars** (project → Settings → Environment Variables):
+   `OAUTH_GITHUB_CLIENT_ID`, `OAUTH_GITHUB_CLIENT_SECRET`. Redeploy so functions pick them up. *(Done 2026-07-19, Production + Preview.)*
+- [x] 5. **Fix `base_url`** in `public/admin/config.yml` to `https://moonlight-web-test.vercel.app`, commit, push. *(Done 2026-07-19.)*
 - [ ] 6. **Dana's access**: create/have her create a GitHub account (she only uses it as a login
    button), then repo → *Settings → Collaborators* → invite with **Write** access; accept the
    invite from her e-mail. Her account name: `______`

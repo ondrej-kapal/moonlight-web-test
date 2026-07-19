@@ -4,7 +4,7 @@ backend:
   branch: main
   # OAuth relay běží jako Vercel functions v tomto repu (api/auth.js, api/callback.js).
   # base_url = doména nasazeného webu — po vytvoření Vercel projektu doplň skutečnou doménu!
-  base_url: https://moonlight-web-test-oafd.vercel.app
+  base_url: https://moonlight-web-test.vercel.app
   auth_endpoint: api/auth
 
 # Návrhy se ukládají jako koncepty (PR na GitHubu) — publikuje se až tlačítkem "Publish".
