@@ -13,7 +13,7 @@ OAuth Client ID/Secret — they belong only in Vercel project env vars.**
 > Once step 7 passes end-to-end, this doc has served its purpose — delete it and remove its
 > pointers from `CLAUDE.md` and `README.md`.
 
-**Status:** 2026-07-19 — steps 1–5 done. Canonical domain is `https://moonlight-web-test.vercel.app` (a second stale Vercel project served `…-oafd.vercel.app` and caused env-var confusion — delete it from the dashboard). OAuth relay verified: `/api/auth` 302s to GitHub. Remaining: confirm the OAuth App callback URL uses the canonical domain, Dana's access (6), end-to-end test (7).
+**Status:** 2026-07-19 — steps 1–5 done and verified. Canonical domain: `https://moonlight-web-test.vercel.app` (stale duplicate `…-oafd` Vercel project deleted). OAuth chain verified: `/api/auth` 302s to GitHub with the registered callback (OAuth App "Inked by Dana"). Remaining: Dana's access (6), end-to-end publish test (7).
 
 ## Already done in the repo (don't redo)
 
@@ -35,7 +35,7 @@ OAuth Client ID/Secret — they belong only in Vercel project env vars.**
    - Homepage URL: `https://moonlight-web-test.vercel.app`
    - **Authorization callback URL: `https://moonlight-web-test.vercel.app/api/callback`**
    - Copy the Client ID, generate a Client Secret. (Dashboard only — do not paste into the repo.)
-   *(App "Moonlight Tattoo" created 2026-07-19 — verify callback URL uses the canonical domain above, it may still point at the stale `-oafd` domain.)*
+   *(App "Inked by Dana" created 2026-07-19; homepage + callback URLs verified on the canonical domain.)*
 - [x] 4. **Vercel env vars** (project → Settings → Environment Variables):
    `OAUTH_GITHUB_CLIENT_ID`, `OAUTH_GITHUB_CLIENT_SECRET`. Redeploy so functions pick them up. *(Done 2026-07-19, Production + Preview.)*
 - [x] 5. **Fix `base_url`** in `public/admin/config.yml` to `https://moonlight-web-test.vercel.app`, commit, push. *(Done 2026-07-19.)*
