@@ -6,14 +6,15 @@
     <meta name="robots" content="noindex" />
     <title>Moonlight Tattoo Wizard</title>
 
-    <!-- Use the YAML config at /admin/config.yml (Decap will auto-load it).
-         Removed inline `CMS.init({ config })` and manual init to avoid
-         duplicate collection definitions. Keep the CDN script below. -->
+    <!-- Load the config by absolute URL: Decap resolves a relative config.yml
+         against the page URL, which breaks when the page is served at /admin
+         (no trailing slash) — it would fetch /config.yml and get the SPA's
+         index.html instead. -->
+    <link rel="cms-config-url" type="text/yaml" href="/admin/config.yml" />
   </head>
   <body>
-    <!-- Decap CMS UI z CDN -->
+    <!-- Decap CMS UI from CDN; no inline CMS.init — the config comes solely
+         from the link tag above (avoids duplicate collection definitions). -->
     <script src="https://unpkg.com/decap-cms@3.14.1/dist/decap-cms.js"></script>
-
-    <!-- No inline CMS.init here — Decap will fetch /admin/config.yml automatically. -->
   </body>
 </html>

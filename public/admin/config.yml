@@ -2,24 +2,24 @@ backend:
   name: github
   repo: ondrej-kapal/moonlight-web-test
   branch: main
-  # OAuth relay běží jako Vercel functions v tomto repu (api/auth.js, api/callback.js).
-  # base_url = doména nasazeného webu — po vytvoření Vercel projektu doplň skutečnou doménu!
+  # The OAuth relay runs as Vercel functions in this repo (api/auth.js, api/callback.js).
+  # base_url = origin of the deployed site — must match the GitHub OAuth App settings.
   base_url: https://moonlight-web-test.vercel.app
   auth_endpoint: api/auth
 
-# Návrhy se ukládají jako koncepty (PR na GitHubu) — publikuje se až tlačítkem "Publish".
+# Drafts are stored as GitHub PRs — published only via the "Publish" button.
 publish_mode: editorial_workflow
 
 local_backend: true
 
-# Media knihovna – explicitně uvedeme "file", ať projde schématem.
+# Media library — set "file" explicitly if the schema ever requires it.
 # media_library:
 #   name: file
 
-# Umožní ukládat obrázky vedle index.md (relativně k entry souboru).
+# Allows storing images next to index.md (relative to the entry file).
 media_folder_relative: true
 
-# Fallback (když někde nezadáme per-collection override).
+# Fallback (when a collection has no per-collection override).
 media_folder: "public/content/uploads"
 public_folder: "/content/uploads"
 
