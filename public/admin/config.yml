@@ -1,8 +1,14 @@
-# ...existing code...
 backend:
-  # Zatím placeholder – autentizaci nastavíme později (GitHub backend).
-  name: git-gateway
+  name: github
+  repo: ondrej-kapal/moonlight-web-test
   branch: main
+  # OAuth relay běží jako Vercel functions v tomto repu (api/auth.js, api/callback.js).
+  # base_url = doména nasazeného webu — po vytvoření Vercel projektu doplň skutečnou doménu!
+  base_url: https://moonlight-web-test.vercel.app # TODO: replace with the real Vercel domain
+  auth_endpoint: api/auth
+
+# Návrhy se ukládají jako koncepty (PR na GitHubu) — publikuje se až tlačítkem "Publish".
+publish_mode: editorial_workflow
 
 local_backend: true
 
@@ -63,11 +69,10 @@ collections:
     public_folder: ""
     fields:
       - { label: "Název", name: "title", widget: "string" }
-      - { label: "Cena", name: "price", widget: "number", required: false }
-      - { label: "Dostupné", name: "available", widget: "boolean", default: true }
+      - { label: "Velikost", name: "size", widget: "string", required: false }
+      - { label: "Umístění", name: "placement", widget: "string", required: false }
       - label: "Obrázky"
         name: "images"
         widget: "list"
         field: { label: "Obrázek", name: "image", widget: "image" }
-      - { label: "Popis", name: "description", widget: "markdown", required: false }
 # ...existing code...

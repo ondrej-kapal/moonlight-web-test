@@ -1,9 +1,26 @@
 [
   {
+    "slug": "otázky-a-odpovědi",
+    "title": "Otázky a odpovědi",
+    "date": "2025-11-09T15:03:00.000Z",
+    "excerpt": "Nejčastěji pokládané otázky.",
+    "preview": null,
+    "cover": "/content/articles/otázky-a-odpovědi/tattoo-machine.jpg"
+  },
+  {
+    "slug": "jak-proboíhá-session",
+    "title": "Jak proboíhá session",
+    "date": "2025-11-09T15:03:00.000Z",
+    "excerpt": "Postup od A do Z.",
+    "preview": null,
+    "cover": "/content/articles/jak-proboíhá-session/p1122073.jpg"
+  },
+  {
     "slug": "test",
-    "title": "TEST",
+    "title": "Jak se starat o tetování",
     "date": "2025-11-05T22:02:00.000Z",
-    "excerpt": "TEST",
-    "cover": "/content/articles/test/chatgpt-image-oct-10-2025-10_50_48-am.png"
+    "excerpt": "Péče od A do Z.",
+    "preview": null,
+    "cover": "/content/articles/test/p1111625.jpg"
   }
 ]

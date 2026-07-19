@@ -1,73 +1,64 @@
-# Welcome to your Lovable project
+# Moonlight Tattoo — web
 
-## Project info
+One-page marketing site for tattoo artist **Dana Kubíková** (Prague). Czech copy, dark theme, moonlight-blue accent. Single-page app with file-based content — no backend, no database.
 
-**URL**: https://lovable.dev/projects/941a15d1-8121-492e-8e03-3ecddd13808d
+> **Rebrand pending:** the site is being transformed into a new identity. Structure, theme, and architecture stay; brand names/copy/assets will be renamed. Keep brand references (name, e-mail, Instagram handle, `public/brand/` assets) centralized and easy to swap.
 
-## How can I edit this code?
+## Stack
 
-There are several ways of editing your application.
+- [Vite](https://vitejs.dev/) + React 18 + TypeScript
+- Tailwind CSS + [shadcn/ui](https://ui.shadcn.com/) (full component set in `src/components/ui/`)
+- React Router (`/`, `/articles`, `/articles/:slug`)
+- [Decap CMS](https://decapcms.org/) for content editing (`/admin`), backed by GitHub via the OAuth relay in `api/`
 
-**Use Lovable**
+A detailed architecture scheme (page layout, content pipeline, run modes) lives in [.claude/docs/architecture.md](.claude/docs/architecture.md).
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/941a15d1-8121-492e-8e03-3ecddd13808d) and start prompting.
+## Getting started
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Requires Node.js & npm.
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
 npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm run dev        # http://localhost:8080
 ```
 
-**Edit a file directly in GitHub**
+`npm run dev` runs Vite plus three content watchers (one per collection) via `concurrently`, and stamps `public/version.json`. Use `npm run dev:solo` for Vite alone.
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### All scripts
 
-**Use GitHub Codespaces**
+```sh
+npm run dev            # version stamp + Vite (port 8080) + 3 content watchers
+npm run dev:solo       # Vite only
+npm run build          # version stamp + content manifests + production build to dist/
+npm run preview        # serve the production build
+npm run lint           # eslint (flat config)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# One-shot manifest rebuilds (what the watchers run on change):
+npm run content:articles
+npm run content:portfolio
+npm run content:designs
+npm run content:all
+```
 
-## What technologies are used for this project?
+There is no test suite.
 
-This project is built with:
+## Content
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+Content is file-based and committed to git:
 
-## How can I deploy this project?
+1. Markdown + images live under `public/content/{articles,portfolio,designs}/<slug>/` (media stored next to the entry).
+2. Scripts in `scripts/content/` scan those folders and generate an `index.json` manifest per collection. **Manifests are generated files — never edit them by hand**; edit the markdown and rebuild.
+3. Section components fetch `/content/<collection>/index.json` at runtime. An empty collection removes its section from the page entirely.
 
-Simply open [Lovable](https://lovable.dev/projects/941a15d1-8121-492e-8e03-3ecddd13808d) and click on Share -> Publish.
+### Editing via CMS
 
-## Can I connect a custom domain to my Lovable project?
+- **Production:** `/admin` serves Decap CMS backed by GitHub (OAuth relay in `api/`, env vars `OAUTH_GITHUB_CLIENT_ID/SECRET` on Vercel). `publish_mode: editorial_workflow` — saving creates a draft PR; "Publish" commits to `main` and triggers a redeploy. Editors need write access to the repo.
+- **Local:** the Decap config has `local_backend: true`; run `npx decap-server` alongside `npm run dev` to use the CMS locally.
 
-Yes, you can!
+`npm run build` regenerates the manifests — CMS-published entries only appear on the site after a build.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## Deployment
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+> ⚠️ **Temporary:** deploys to **Vercel**; hosting will later migrate to a server + Cloudflare setup. This section (and `vercel.json`) goes away with the migration — see the architecture doc for the checklist. One-time Vercel/GitHub setup: [.claude/docs/HANDOVER-github-setup.md](.claude/docs/HANDOVER-github-setup.md).
+
+Every push to `main` deploys. The build regenerates the content manifests, so CMS-published entries go live automatically. `vercel.json` rewrites non-file paths to `index.html` for React Router; real files (`/admin/index.html`, `/content/*`) and `/api/*` are served directly.

@@ -5,15 +5,18 @@
   "type": "module",
   "scripts": {
     "version:build": "node scripts/build-version.mjs",
-    "dev": "npm run version:build && concurrently -k -n VITE,CONTENT,PORTF \"vite\" \"node scripts/content/watch-articles.mjs\" \"node scripts/content/watch-portfolio.mjs\"",
+    "dev": "npm run version:build && concurrently -k -n VITE,CONTENT,PORTF,DESIGNS \"vite\" \"node scripts/content/watch-articles.mjs\" \"node scripts/content/watch-portfolio.mjs\" \"node scripts/content/watch-designs.mjs\"",
     "dev:solo": "vite",
-    "build": "npm run version:build && vite build",
+    "build": "npm run version:build && npm run content:all && vite build",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
+    "content:all": "npm run content:articles && npm run content:portfolio && npm run content:designs",
     "content:articles": "node scripts/content/build-articles.mjs",
     "content:portfolio": "node scripts/content/build-portfolio.mjs",
-    "watch:portfolio": "node scripts/content/watch-portfolio.mjs"
+    "content:designs": "node scripts/content/build-designs.mjs",
+    "watch:portfolio": "node scripts/content/watch-portfolio.mjs",
+    "watch:designs": "node scripts/content/watch-designs.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -85,7 +88,6 @@
     "fast-glob": "^3.3.3",
     "globals": "^15.15.0",
     "gray-matter": "^4.0.3",
-    "lovable-tagger": "^1.1.9",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",

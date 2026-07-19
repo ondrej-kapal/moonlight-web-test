@@ -3,105 +3,77 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
+
+const CONTACT_EMAIL = 'moonlightbooking@seznam.cz';
+const INSTAGRAM_URL = 'https://www.instagram.com/_m00nlight_tatts/';
+const INSTAGRAM_HANDLE = '@_m00nlight_tatts';
+
+const tattooTypeLabels: Record<string, string> = {
+  individual: 'Individuální návrh',
+  gallery: 'Volný návrh z galerie',
+  consultation: 'Konzultace',
+};
 
 const Contact = () => {
-  const { toast } = useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     message: '',
-    tattooType: 'individual'
+    tattooType: 'individual',
   });
 
+  // Bez backendu: formulář otevře e-mailového klienta s předvyplněnou zprávou
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Zde by se poslal email nebo API request
-    toast({
-      title: "Zpráva odeslána!",
-      description: "Děkujeme za vaši zprávu. Ozveme se vám do 24 hodin.",
-    });
 
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      message: '',
-      tattooType: 'individual'
-    });
+    const typeLabel = tattooTypeLabels[formData.tattooType] ?? formData.tattooType;
+    const subject = `Rezervace / dotaz – ${typeLabel}`;
+    const body = [
+      `Jméno: ${formData.name}`,
+      formData.phone ? `Telefon: ${formData.phone}` : null,
+      formData.email ? `E-mail: ${formData.email}` : null,
+      `Zájem o: ${typeLabel}`,
+      '',
+      formData.message,
+    ]
+      .filter((line) => line !== null)
+      .join('\n');
+
+    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  const contactInfo = [
-    {
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-        </svg>
-      ),
-      title: "Telefon",
-      value: "+420 123 456 789",
-      link: "tel:+420123456789"
-    },
-    {
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-        </svg>
-      ),
-      title: "Email",
-      value: "info@tattoostudio.cz",
-      link: "mailto:info@tattoostudio.cz"
-    },
-    {
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-        </svg>
-      ),
-      title: "Adresa",
-      value: "Novákových 123, Praha 2",
-      link: null
-    },
-    {
-      icon: (
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-      ),
-      title: "Otevírací doba",
-      value: "Po-Pá: 10:00-20:00, So: 10:00-18:00",
-      link: null
-    }
+  const bookingSteps = [
+    'Napiš mi přes formulář, e-mail nebo Instagram – popiš motiv, umístění a přibližnou velikost.',
+    'Ozvu se ti zpátky a domluvíme konzultaci – ta je vždy zdarma a nezávazná.',
+    'Připravím návrh na míru a společně ho doladíme, dokud nebude přesně podle tvé představy.',
+    'Domluvíme termín a jde se tetovat.',
   ];
 
   return (
-    <section id="contact" className="section-spacing section-padding bg-tattoo-grey/30">
+    <section id="contact" className="section-spacing section-padding scroll-mt-24">
       <div className="max-w-6xl mx-auto">
-        <h2 className="section-title text-center gradient-text mb-8">
+        <h2 className="text-4xl lg:text-5xl font-semibold text-[color:var(--ml-accent)] mb-6">
           Kontakt & Rezervace
         </h2>
 
-        <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-          Máte zájem o tetování nebo máte dotazy? Neváhejte mě kontaktovat. 
-          Rád s vámi prodiskutuji vaše představy a pomohu najít perfektní řešení.
+        <p className="text-lg text-foreground/90 mb-12 max-w-2xl">
+          Máš zájem o tetování, nebo se chceš jen na něco zeptat? Napiš mi.
+          Ráda s tebou proberu tvoji představu a společně najdeme návrh, který ti sedne.
         </p>
 
         <div className="grid lg:grid-cols-2 gap-12">
           {/* Contact Form */}
           <Card className="p-8">
-            <h3 className="text-2xl font-bold gradient-text-gold mb-6">
-              Napište mi
+            <h3 className="text-2xl font-semibold text-[color:var(--ml-accent)] mb-6">
+              Napiš mi
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -115,7 +87,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     className="w-full"
-                    placeholder="Vaše jméno"
+                    placeholder="Tvoje jméno"
                   />
                 </div>
                 <div>
@@ -126,13 +98,13 @@ const Contact = () => {
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full"
-                    placeholder="+420 123 456 789"
+                    placeholder="+420 777 000 000"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Email *</label>
+                <label className="block text-sm font-medium mb-2">E-mail *</label>
                 <Input
                   type="email"
                   name="email"
@@ -140,12 +112,12 @@ const Contact = () => {
                   onChange={handleChange}
                   required
                   className="w-full"
-                  placeholder="vas@email.cz"
+                  placeholder="tvuj@email.cz"
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Typ tetování</label>
+                <label className="block text-sm font-medium mb-2">Co tě zajímá</label>
                 <select
                   name="tattooType"
                   value={formData.tattooType}
@@ -153,7 +125,7 @@ const Contact = () => {
                   className="w-full bg-input border border-border rounded-lg px-3 py-2 text-foreground"
                 >
                   <option value="individual">Individuální návrh</option>
-                  <option value="gallery">Design z galerie</option>
+                  <option value="gallery">Volný návrh z galerie</option>
                   <option value="consultation">Konzultace</option>
                 </select>
               </div>
@@ -167,70 +139,88 @@ const Contact = () => {
                   required
                   rows={5}
                   className="w-full"
-                  placeholder="Popište svou představu o tetování, preferované umístění, velikost..."
+                  placeholder="Popiš svou představu – motiv, umístění, velikost…"
                 />
               </div>
 
-              <Button type="submit" variant="hero" className="w-full">
+              <Button
+                type="submit"
+                className="w-full bg-[color:var(--ml-accent)] text-white font-semibold hover:bg-[color:var(--ml-accent)] hover:opacity-90"
+              >
                 Odeslat zprávu
               </Button>
+
+              <p className="text-xs text-muted-foreground">
+                Odesláním se otevře tvůj e-mail s předvyplněnou zprávou na {CONTACT_EMAIL}.
+              </p>
             </form>
           </Card>
 
-          {/* Contact Info */}
+          {/* Contact info + booking flow */}
           <div className="space-y-6">
             <Card className="p-8">
-              <h3 className="text-2xl font-bold gradient-text-gold mb-6">
-                Kontaktní informace
+              <h3 className="text-2xl font-semibold text-[color:var(--ml-accent)] mb-6">
+                Kde mě najdeš
               </h3>
 
               <div className="space-y-6">
-                {contactInfo.map((item, index) => (
-                  <div key={index} className="flex items-start space-x-4">
-                    <div className="text-tattoo-red mt-1">
-                      {item.icon}
-                    </div>
-                    <div>
-                      <h4 className="font-medium mb-1">{item.title}</h4>
-                      {item.link ? (
-                        <a 
-                          href={item.link} 
-                          className="text-muted-foreground hover:text-tattoo-red transition-colors"
-                        >
-                          {item.value}
-                        </a>
-                      ) : (
-                        <p className="text-muted-foreground">{item.value}</p>
-                      )}
-                    </div>
+                <div className="flex items-start space-x-4">
+                  <div className="text-[color:var(--ml-accent)] mt-1">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <rect x="3" y="3" width="18" height="18" rx="5" strokeWidth={2} />
+                      <circle cx="12" cy="12" r="4" strokeWidth={2} />
+                      <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor" stroke="none" />
+                    </svg>
                   </div>
-                ))}
+                  <div>
+                    <h4 className="font-medium mb-1">Instagram</h4>
+                    <a
+                      href={INSTAGRAM_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-muted-foreground hover:text-[color:var(--ml-accent)] transition-colors"
+                    >
+                      {INSTAGRAM_HANDLE}
+                    </a>
+                    <p className="text-sm text-muted-foreground/80 mt-1">
+                      Nejrychlejší cesta – napiš mi klidně rovnou do DM.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start space-x-4">
+                  <div className="text-[color:var(--ml-accent)] mt-1">
+                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4 className="font-medium mb-1">E-mail</h4>
+                    <a
+                      href={`mailto:${CONTACT_EMAIL}`}
+                      className="text-muted-foreground hover:text-[color:var(--ml-accent)] transition-colors"
+                    >
+                      {CONTACT_EMAIL}
+                    </a>
+                  </div>
+                </div>
               </div>
             </Card>
 
-            {/* Booking Info */}
             <Card className="p-8">
-              <h3 className="text-xl font-bold gradient-text mb-4">
-                Důležité informace
+              <h3 className="text-xl font-semibold text-[color:var(--ml-accent)] mb-4">
+                Jak rezervace probíhá
               </h3>
-              
+
               <div className="space-y-4 text-sm text-muted-foreground">
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-tattoo-red rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Individuální návrhy vyžadují rezervaci min. 2 týdny dopředu</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-tattoo-red rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Konzultace je vždy zdarma a nezávazná</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-tattoo-red rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Cena tetování se odvíjí od velikosti, složitosti a umístění</p>
-                </div>
-                <div className="flex items-start space-x-3">
-                  <div className="w-2 h-2 bg-tattoo-red rounded-full mt-2 flex-shrink-0"></div>
-                  <p>Pro rezervaci termínu je nutná záloha 30% z celkové ceny</p>
-                </div>
+                {bookingSteps.map((step, index) => (
+                  <div key={index} className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[color:var(--ml-accent)] text-white flex items-center justify-center text-xs font-bold mt-0.5">
+                      {index + 1}
+                    </div>
+                    <p className="leading-relaxed">{step}</p>
+                  </div>
+                ))}
               </div>
             </Card>
           </div>
