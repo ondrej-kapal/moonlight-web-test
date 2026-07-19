@@ -9,7 +9,7 @@ type RenderArticle = {
   title: string;
   excerpt?: string;
   image?: string | null;
-  date?: string | null; // zobrazované datum (např. 15. 11. 2024)
+  date?: string | null; // showned date (ie 15. 11. 2024)
   readTime?: string;
 };
 
@@ -29,12 +29,13 @@ export default function Articles() {
     (async () => {
       try {
         const res = await fetch("/content/articles/index.json", { cache: "no-cache" });
-        if (!res.ok) return; // manifest zatím není → nerenderujeme nic
+        if (!res.ok) return; // no manifest -> don't render anything
         const items: Array<{
           slug: string;
           title: string;
           date?: string | null;
           excerpt?: string;
+          preview?: string | null;
           cover?: string | null;
           readTime?: string;
         }> = await res.json();
@@ -44,14 +45,15 @@ export default function Articles() {
           slug: it.slug,
           title: it.title ?? it.slug ?? "Bez názvu",
           excerpt: it.excerpt ?? "",
-          image: it.cover ?? null,
+          // prefer preview ("Náhled") for the listing; fall back to cover
+          image: it.preview ?? it.cover ?? null,
           date: formatDateCz(it.date),
           readTime: it.readTime,
         }));
 
         if (!cancelled) setArticles(top);
       } catch {
-        // manifest není / chyba -> nerenderujeme nic
+        // no manifest / error -> don't render anything
       }
     })();
 
@@ -60,13 +62,13 @@ export default function Articles() {
     };
   }, []);
 
-  // Když nejsou články, nerenderuj nic (žádný prázdný box, žádné texty)
+  // When there are no articles, render nothing (no empty box, no texts)
   if (articles.length === 0) return null;
 
   return (
     <section id="articles" className="section-spacing section-padding scroll-mt-24">
         <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl lg:text-5xl font-semibold text-[color:var(--ml-accent)] mb-6 text-center">
+        <h2 className="text-4xl lg:text-5xl font-semibold text-[color:var(--ml-accent)] mb-6">
           Články
         </h2>
         <div className="flex gap-6 overflow-x-auto pb-6 scroll-smooth">
@@ -95,7 +97,7 @@ export default function Articles() {
 
               <div className="p-6">
                 <div className="text-sm text-muted-foreground mb-2">{article.date ?? ""}</div>
-                <h3 className="text-xl font-bold mb-3 gradient-text-gold line-clamp-2">
+                <h3 className="text-xl font-bold mb-3 text-white line-clamp-2">
                   {article.title}
                 </h3>
                 {article.excerpt ? (
@@ -104,9 +106,9 @@ export default function Articles() {
                   </p>
                 ) : null}
 
-                {/* necháme tu jen nenápadné CTA pro budoucí detail; můžeš klidně odstranit */}
+                {/* leave only a subtle CTA for future detail; you can remove it if you want */}
                 {article.slug ? (
-                  <Button asChild variant="minimal" className="mt-4 p-0 h-auto font-medium">
+                  <Button asChild variant="minimal" className="mt-4 p-0 h-auto font-medium text-[color:var(--ml-accent)]">
                     <Link to={`/articles/${article.slug}`}>Číst více →</Link>
                   </Button>
                 ) : null}

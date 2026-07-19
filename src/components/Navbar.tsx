@@ -12,7 +12,7 @@ const MENU: { id: string; label: string }[] = [
   // { id: "studio", label: "Studio" },      // deprecated
   { id: "designs", label: "Volné návrhy" },
   { id: "contact", label: "Kontakt" },
-  { id: "reservations", label: "REREZERVACE" }, 
+  { id: "reservations", label: "REZERVACE" },
 ];
 
 // 2) Alias menu-id -> real DOM id

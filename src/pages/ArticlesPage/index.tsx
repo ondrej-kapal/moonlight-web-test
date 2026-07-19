@@ -45,7 +45,7 @@ export default function ArticlesPage() {
     <>
       <Navbar />
       <main className="max-w-6xl mx-auto px-4 py-10">
-        <h1 className="text-3xl md:text-4xl font-bold mb-8 gradient-text-gold">
+        <h1 className="text-3xl md:text-4xl font-bold mb-8 text-white">
           Všechny články
         </h1>
 
@@ -85,7 +85,7 @@ export default function ArticlesPage() {
                     {formatDateCz(a.date) ?? ""}
                     {a.readTime ? ` • ${a.readTime}` : ""}
                   </div>
-                  <h2 className="text-lg font-semibold mb-2 line-clamp-2">
+                  <h2 className="text-lg font-semibold mb-2 line-clamp-2 text-white">
                     <Link to={`/articles/${a.slug}`} className="hover:underline">
                       {a.title}
                     </Link>

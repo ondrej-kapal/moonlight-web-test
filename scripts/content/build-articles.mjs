@@ -21,6 +21,11 @@ function resolveCover(slug, val) {
   return toPublicUrl(path.join(ARTICLES_DIR, slug, val)); // relativní soubor
 }
 
+function resolveAsset(slug, val) {
+  // Generic resolver for preview/cover/front-image fields
+  return resolveCover(slug, val);
+}
+
 async function pickFileForSlug(slug, files) {
   // Preferuj "slug/index.md", jinak vezmi naposledy změněný .md ve slugu
   const preferred = `${slug}/index.md`;
@@ -63,7 +68,8 @@ async function main() {
     const title = data.title ?? slug;
     const dateIso = data.date ? new Date(data.date).toISOString() : null;
     const excerpt = data.excerpt ?? "";
-    const cover = resolveCover(slug, data.cover);
+  const preview = resolveAsset(slug, data.preview);
+  const cover = resolveAsset(slug, data.cover ?? data.coverPhoto ?? data.uvodni_fotka);
 
     let sortDate = dateIso;
     if (!sortDate) {
@@ -76,6 +82,7 @@ async function main() {
       title,
       date: sortDate,
       excerpt,
+      preview: preview ?? null,
       cover,
       readTime: data.readTime ?? undefined,
     });

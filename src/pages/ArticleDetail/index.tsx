@@ -11,6 +11,7 @@ type ArticleMeta = {
   date?: string | null;
   excerpt?: string;
   cover?: string | null;
+  preview?: string | null;
   readTime?: string;
 };
 
@@ -63,8 +64,8 @@ export default function ArticleDetail() {
           : text;
 
         if (!cancelled) setMd(cleaned);
-      } catch (e: any) {
-        if (!cancelled) setErr(e?.message || "Nepodařilo se načíst článek.");
+      } catch (e) {
+        if (!cancelled) setErr(e instanceof Error ? e.message : "Nepodařilo se načíst článek.");
       }
     })();
 
@@ -119,37 +120,41 @@ export default function ArticleDetail() {
       <Navbar />
       <article className="max-w-3xl mx-auto px-4 py-10">
         {/* Hlavní titulek + meta */}
-        <h1 className="text-3xl md:text-4xl font-bold mb-2 gradient-text-gold">
+        <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white text-center">
           {meta?.title ?? slug}
         </h1>
-        <div className="text-sm text-muted-foreground mb-6">
+        <div className="text-sm text-muted-foreground mb-6 text-center">
           {formatDateCz(meta?.date) ?? ""}
           {meta?.readTime ? ` • ${meta.readTime}` : ""}
         </div>
 
-        {/* Cover (pokud je) */}
+        {/* Optional cover / Úvodní fotka — shown at top in consistent aspect ratio */}
         {meta?.cover ? (
-          <img
-            src={meta.cover}
-            alt={meta.title ?? ""}
-            className="w-full rounded-lg mb-8"
-            loading="lazy"
-          />
+          <div className="mb-6">
+            <img
+              src={meta.cover}
+              alt={meta.title ?? ""}
+              className="w-full h-64 md:h-96 object-cover rounded-lg mx-auto"
+            />
+          </div>
         ) : null}
 
-        {/* Markdown obsah */}
+        {/* Markdown obsah (images rendered) */}
         <div className="prose max-w-none">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
-              img: ({ node, src, ...props }) => (
-                <img
-                  src={resolveImg(typeof src === "string" ? src : undefined)}
-                  className="rounded-lg"
-                  loading="lazy"
-                  {...props}
-                />
-              ),
+              img: ({ node, ...props }) => {
+                const src = resolveImg(props.src);
+                return (
+                  <img
+                    src={src}
+                    alt={props.alt ?? ""}
+                    className="max-w-full rounded-lg my-4"
+                    loading="lazy"
+                  />
+                );
+              },
               a: ({ node, ...props }) => (
                 <a {...props} className="text-blue-600 hover:underline" />
               ),

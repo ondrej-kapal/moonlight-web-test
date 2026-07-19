@@ -1,0 +1,14 @@
+{
+  "designs": [
+    {
+      "id": "nazev-0",
+      "image": "/content/designs/nazev/chatgpt-image-oct-10-2025-10_50_48-am.png",
+      "title": " 2x NAZEV",
+      "category": "other",
+      "size": "30x24 cm",
+      "placement": "Stehno, paže",
+      "available": true,
+      "price": 3000
+    }
+  ]
+}
