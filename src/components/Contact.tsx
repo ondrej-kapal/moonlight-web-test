@@ -23,7 +23,7 @@ const Contact = () => {
     tattooType: 'individual',
   });
 
-  // Bez backendu: formulář otevře e-mailového klienta s předvyplněnou zprávou
+  // No backend: the form opens the user's e-mail client with a pre-filled message
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 

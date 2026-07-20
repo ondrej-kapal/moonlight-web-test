@@ -30,7 +30,7 @@ export default function ArticleDetail() {
   const [md, setMd] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
-  // přemapování relativních cest obrázků v MD na /content/articles/<slug>/...
+  // remap relative image paths in the MD to /content/articles/<slug>/...
   const resolveImg = useMemo(() => {
     return (src?: string) => {
       if (!src) return src;
@@ -45,7 +45,7 @@ export default function ArticleDetail() {
 
     (async () => {
       try {
-        // 1) metadata z manifestu
+        // 1) metadata from the manifest
         const resMeta = await fetch("/content/articles/index.json", { cache: "no-cache" });
         if (resMeta.ok) {
           const items: ArticleMeta[] = await resMeta.json();
@@ -53,12 +53,12 @@ export default function ArticleDetail() {
           if (!cancelled) setMeta(found);
         }
 
-        // 2) markdown obsahu
+        // 2) markdown content
         const resMd = await fetch(`/content/articles/${slug}/index.md`, { cache: "no-cache" });
         if (!resMd.ok) throw new Error("Článek nenalezen.");
         const text = await resMd.text();
 
-        // odstraň YAML front-matter (--- ... --- na začátku) – metadata bereme z manifestu
+        // strip the YAML front-matter (--- ... --- at the start) – metadata comes from the manifest
         const cleaned = text.startsWith("---")
           ? text.slice(text.indexOf("---", 3) + 3).replace(/^\s*/, "")
           : text;
@@ -74,7 +74,7 @@ export default function ArticleDetail() {
     };
   }, [slug]);
 
-  // ERROR stav – žádný link nahoře, jen tlačítko dole
+  // ERROR state – no link at the top, only the button at the bottom
   if (err) {
     return (
       <>
@@ -93,7 +93,7 @@ export default function ArticleDetail() {
     );
   }
 
-  // LOADING stav – žádný link nahoře, tlačítko dole
+  // LOADING state – no link at the top, button at the bottom
   if (!md) {
     return (
       <>
@@ -119,7 +119,7 @@ export default function ArticleDetail() {
     <>
       <Navbar />
       <article className="max-w-3xl mx-auto px-4 py-10">
-        {/* Hlavní titulek + meta */}
+        {/* Main title + meta */}
         <h1 className="text-3xl md:text-4xl font-bold mb-6 text-white text-center">
           {meta?.title ?? slug}
         </h1>
@@ -139,7 +139,7 @@ export default function ArticleDetail() {
           </div>
         ) : null}
 
-        {/* Markdown obsah (images rendered) */}
+        {/* Markdown content (images rendered) */}
         <div className="prose max-w-none">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
@@ -167,7 +167,7 @@ export default function ArticleDetail() {
           </ReactMarkdown>
         </div>
 
-        {/* Spodní CTA „Zpět na úvod“ */}
+        {/* Bottom CTA „Zpět na úvod“ */}
         <hr className="my-8 border-muted" />
         <div className="mt-6 flex justify-center">
           <Button asChild variant="hero">

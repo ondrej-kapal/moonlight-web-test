@@ -21,7 +21,7 @@ const Hero = () => {
         />
         <div className="absolute inset-0 from-tattoo-black/70 via-tattoo-black/60 to-tattoo-black/80"></div>
       </div>
-      {/* Prázdný obsah, vše odstraněno dle požadavku */}
+      {/* Empty content, everything removed as requested */}
     </section>
   );
 };

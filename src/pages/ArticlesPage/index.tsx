@@ -63,7 +63,7 @@ export default function ArticlesPage() {
           <div className="text-muted-foreground">Zatím tu nejsou žádné články.</div>
         )}
 
-        {/* Grid článků */}
+        {/* Articles grid */}
         {items && items.length > 0 && (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {items.map((a) => (

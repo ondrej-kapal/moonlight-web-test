@@ -34,7 +34,7 @@ const FreeDesigns = () => {
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  // Default mock volné návrhy data (fallback)
+  // Default mock free-designs data (fallback)
   const defaultMock: Design[] = [];
 
   const [remoteDesigns, setRemoteDesigns] = useState<Design[] | null>(null);

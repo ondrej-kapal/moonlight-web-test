@@ -17,7 +17,7 @@ const MENU: { id: string; label: string }[] = [
 
 // 2) Alias menu-id -> real DOM id
 const DOM_ID_MAP: Record<string, string> = {
-  reservations: "contact", // Rezervace scrolluje na sekci contact
+  reservations: "contact", // "Rezervace" scrolls to the contact section
 };
 const toDomId = (menuId: string) => DOM_ID_MAP[menuId] ?? menuId;
 
@@ -29,7 +29,7 @@ export default function Navbar() {
     const onScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      const y = window.scrollY + HEADER_HEIGHT + 24; // malý buffer
+      const y = window.scrollY + HEADER_HEIGHT + 24; // small buffer
       let found: string | null = null;
 
       for (let i = MENU.length - 1; i >= 0; i--) {
@@ -42,7 +42,7 @@ export default function Navbar() {
         }
       }
 
-      // Pokud jsme nad první sekcí, nastav aktivní na "home"
+      // If we're above the first section, set active to "home"
       const firstSectionId = toDomId(MENU[0].id);
       const firstSection = document.getElementById(firstSectionId);
       if (firstSection && window.scrollY + HEADER_HEIGHT + 24 < firstSection.offsetTop) {
@@ -59,7 +59,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // plynulý scroll + kompenzace sticky headeru
+  // smooth scroll + compensate for the sticky header
   const scrollToSection = (menuId: string) => {
     const domId = toDomId(menuId);
     const el = document.getElementById(domId);
@@ -140,13 +140,13 @@ export default function Navbar() {
             />
           </button>
 
-          {/* Akce vpravo */}
+          {/* Actions on the right */}
           <div className="flex items-center gap-2">
-            {/* Můžeš chtít, aby CTA bylo vizuálně stejné jako „Rezervace“ v menu */}
+            {/* You may want the CTA to look the same as „Rezervace“ in the menu */}
 
 {/* ─────────────────────────────────────────────────────────
 
-            {/* Mobile burger (logiku přidáme později) */}
+            {/* Mobile burger (logic to be added later) */}
             {/*
             <Button variant="ghost" size="icon" className="lg:hidden">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">

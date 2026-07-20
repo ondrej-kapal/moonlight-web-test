@@ -14,10 +14,10 @@ import NotFound from "./pages/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => {
-  // Přesměruj /admin -> /admin/ (statický Decap v public/admin/index.html)
+  // Redirect /admin -> /admin/ (static Decap CMS in public/admin/index.html)
   useEffect(() => {
   if (window.location.pathname === "/admin" || window.location.pathname === "/admin/") {
-    // ⬇ lokálně i v prod nasměrujeme přímo na soubor
+    // ⬇ point directly at the file, both locally and in prod
     window.location.replace("/admin/index.html");
   }
   }, []);

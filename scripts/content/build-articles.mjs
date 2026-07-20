@@ -16,9 +16,9 @@ function toPublicUrl(absPath) {
 
 function resolveCover(slug, val) {
   if (!val) return null;
-  if (/^https?:\/\//i.test(val)) return val; // externí URL
-  if (val.startsWith("/")) return val;       // absolutní cesta v /public
-  return toPublicUrl(path.join(ARTICLES_DIR, slug, val)); // relativní soubor
+  if (/^https?:\/\//i.test(val)) return val; // external URL
+  if (val.startsWith("/")) return val;       // absolute path in /public
+  return toPublicUrl(path.join(ARTICLES_DIR, slug, val)); // relative file
 }
 
 function resolveAsset(slug, val) {
@@ -27,7 +27,7 @@ function resolveAsset(slug, val) {
 }
 
 async function pickFileForSlug(slug, files) {
-  // Preferuj "slug/index.md", jinak vezmi naposledy změněný .md ve slugu
+  // Prefer "slug/index.md", otherwise take the most recently modified .md in the slug
   const preferred = `${slug}/index.md`;
   if (files.includes(preferred)) return preferred;
 
@@ -41,14 +41,14 @@ async function pickFileForSlug(slug, files) {
       best = rel;
     }
   }
-  return best; // může být null, když by slug neměl žádný .md (nečekané)
+  return best; // may be null if the slug has no .md at all (unexpected)
 }
 
 async function main() {
-  // seber VŠECHNY .md soubory ve struktuře "<slug>/*.md"
+  // collect ALL .md files matching "<slug>/*.md"
   const allMd = await fg("*/*.md", { cwd: ARTICLES_DIR, dot: false });
 
-  // seskup do mapy dle slugu
+  // group into a map by slug
   const bySlug = new Map(); // slug -> string[]
   for (const rel of allMd) {
     const slug = rel.split("/")[0];
@@ -88,10 +88,10 @@ async function main() {
     });
   }
 
-  // novější první
+  // newest first
   items.sort((a, b) => (a.date < b.date ? 1 : -1));
 
-  // zapisuj jen když je změna
+  // only write when something changed
   await fs.mkdir(ARTICLES_DIR, { recursive: true });
   const json = JSON.stringify(items, null, 2);
 

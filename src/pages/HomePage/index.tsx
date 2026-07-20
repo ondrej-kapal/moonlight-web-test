@@ -19,15 +19,15 @@ const Index = () => {
 
     const id = decodeURIComponent(location.hash.slice(1)); // "#articles" -> "articles"
 
-    // Opakovaně zkus najít element (kvůli časování renderu po navigaci)
+    // Repeatedly try to find the element (render timing after navigation)
     let tries = 0;
-    const maxTries = 20; // ~1s při 50ms intervalu
+    const maxTries = 20; // ~1s at a 50ms interval
     const interval = setInterval(() => {
       const el = document.getElementById(id);
       tries++;
 
       if (el) {
-        // pokud máš sticky navbar, je fajn dát sekci className="scroll-mt-24"
+        // with a sticky navbar it's good to give the section className="scroll-mt-24"
         el.scrollIntoView({ behavior: "smooth", block: "start" });
         clearInterval(interval);
       } else if (tries >= maxTries) {
@@ -36,7 +36,7 @@ const Index = () => {
     }, 50);
 
     return () => clearInterval(interval);
-  }, [location.key, location.hash]); // location.key zajistí, že efekt běží i při změně stránky
+  }, [location.key, location.hash]); // location.key makes sure the effect also runs on page change
 
   return (
     <div className="min-h-screen bg-background">

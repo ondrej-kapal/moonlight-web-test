@@ -20,21 +20,21 @@ function runBuild() {
   });
 }
 
-// Debounce – ať se build nespouští mockrát po sobě
+// Debounce – so the build doesn't run several times in a row
 let timer = null;
 function debouncedBuild() {
   clearTimeout(timer);
   timer = setTimeout(runBuild, 200);
 }
 
-// Inicializační build
+// Initial build
 runBuild();
 
-// Sleduj celý adresář článků, ale ignoruj výstupní index.json a dot-soubory
+// Watch the whole articles directory, but ignore the output index.json and dotfiles
 const watcher = chokidar.watch(ARTICLES_DIR, {
   ignored: [
     OUTPUT_FILE,
-    /(^|[/\\])\../, // .git, .DS_Store apod.
+    /(^|[/\\])\../, // .git, .DS_Store, etc.
   ],
   ignoreInitial: true,
   persistent: true,
@@ -44,7 +44,7 @@ const watcher = chokidar.watch(ARTICLES_DIR, {
 watcher.on("all", (event, filePath) => {
   const rel = path.relative(ARTICLES_DIR, filePath);
 
-  // 👉 Reaguj na jakýkoliv .md (ne jen index.md), obrázky a změny složek
+  // 👉 React to any .md (not just index.md), images, and folder changes
   const isMd = /\.md$/i.test(rel);
   const isImg = /\.(png|jpe?g|webp|gif|svg|avif)$/i.test(rel);
   const isDirChange = event === "addDir" || event === "unlinkDir";
